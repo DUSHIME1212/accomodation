@@ -35,7 +35,7 @@ export default function Navbar() {
   return (
     <header
       className={cn(
-        "fixed top-0 right-0 px-8 md:px-16 lg:px-32 left-0 z-50 transition-all duration-300",
+        " top-0 right-0 px-8 md:px-16 lg:px-32 left-0 z-50 transition-all duration-300",
         scrolled
           ? "dark:bg-card/80 bg-white/80 py-3 shadow-md backdrop-blur-lg"
           : "bg-transparent py-5",
