@@ -9,7 +9,7 @@ export const en = {
       bookNow: "Book Now"
     },
     hero: {
-      subtitle: "BEACHFRONT LUXURY ACCOMMODATION",
+      subtitle: "Silver Horizon Hotel",
       title: "Experience Seaside Tranquility",
       description: "Discover our exclusive collection of luxury beachfront apartments and hotel rooms, offering unparalleled comfort and breathtaking sea views.",
       bookStay: "Book Your Stay",
@@ -40,7 +40,7 @@ export const en = {
     },
     testimonials: {
       title: "What Our Guests Say",
-      description: "Discover why our guests keep coming back to MareSereno for their seaside getaways."
+      description: "Discover why our guests keep coming back to Silver Horizon Hotel for their seaside getaways."
     },
     notFound: {
       title: "Page Not Found",
@@ -49,9 +49,9 @@ export const en = {
     },
     home: {
       welcome: {
-        subtitle: "Welcome to MareSereno",
+        subtitle: "Welcome to Silver Horizon Hotel",
         title: "Luxury Seaside Accommodations",
-        description1: "Nestled on the pristine Mediterranean coastline, MareSereno offers an exquisite collection of luxury apartments and hotel rooms. Our beachfront accommodations combine elegant design with modern comfort, creating the perfect setting for an unforgettable seaside getaway.",
+        description1: "Nestled on the pristine Mediterranean coastline, Silver Horizon Hotel offers an exquisite collection of luxury apartments and hotel rooms. Our beachfront accommodations combine elegant design with modern comfort, creating the perfect setting for an unforgettable seaside getaway.",
         description2: "Whether you're seeking a romantic escape, a family vacation, or a peaceful retreat, our diverse range of accommodations caters to every preference and need. Each space is thoughtfully designed to provide panoramic sea views and direct beach access.",
         learnMore: "Learn More"
       },
@@ -309,7 +309,7 @@ export const en = {
     amenitiesPage: {
       title: "Our Amenities",
       subtitle: "Discover the luxury amenities and services that make your stay unforgettable.",
-      description: "At MareSereno, we are dedicated to providing a comprehensive and luxurious stay experience. From our beachfront services to wellness facilities, every detail has been curated to ensure maximum comfort and pleasure.",
+      description: "At Silver Horizon Hotel, we are dedicated to providing a comprehensive and luxurious stay experience. From our beachfront services to wellness facilities, every detail has been curated to ensure maximum comfort and pleasure.",
       roomAmenities: "In-Room Amenities",
       roomDescription: "Each of our accommodations is equipped with premium amenities to enhance your comfort and convenience.",
       roomItems: {

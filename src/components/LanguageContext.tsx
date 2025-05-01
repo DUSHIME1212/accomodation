@@ -1,6 +1,7 @@
 "use client";
 import { en } from '@/locales/en';
 import { it } from '@/locales/it';
+import { rw } from '@/locales/rw';
 import React, { createContext, useState, useEffect, useContext, type ReactNode } from 'react';
 
 
@@ -14,7 +15,8 @@ interface LanguageContextType {
 
 const translations: Record<string, Translations> = {
   en,
-  it
+  it,
+  rw
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);

@@ -40,7 +40,7 @@ export const it = {
     },
     testimonials: {
       title: "Cosa Dicono i Nostri Ospiti",
-      description: "Scopri perché i nostri ospiti continuano a tornare a MareSereno per le loro fughe al mare."
+      description: "Scopri perché i nostri ospiti continuano a tornare a Silver Horizon Hotel per le loro fughe al mare."
     },
     notFound: {
       title: "Pagina Non Trovata",
@@ -235,9 +235,9 @@ export const it = {
     },
     home: {
       welcome: {
-        subtitle: "Benvenuti a MareSereno",
+        subtitle: "Benvenuti a Silver Horizon Hotel",
         title: "Alloggi di Lusso sul Mare",
-        description1: "Situato sulla incontaminata costa mediterranea, MareSereno offre una squisita collezione di appartamenti di lusso e camere d'albergo. I nostri alloggi fronte mare combinano un design elegante con comfort moderni, creando l'ambientazione perfetta per una indimenticabile fuga al mare.",
+        description1: "Situato sulla incontaminata costa mediterranea, Silver Horizon Hotel offre una squisita collezione di appartamenti di lusso e camere d'albergo. I nostri alloggi fronte mare combinano un design elegante con comfort moderni, creando l'ambientazione perfetta per una indimenticabile fuga al mare.",
         description2: "Che tu stia cercando una fuga romantica, una vacanza in famiglia o un ritiro tranquillo, la nostra vasta gamma di alloggi si adatta a ogni preferenza ed esigenza. Ogni spazio è progettato con cura per fornire viste panoramiche sul mare e accesso diretto alla spiaggia.",
         learnMore: "Scopri di Più"
       },
@@ -293,7 +293,7 @@ export const it = {
     amenitiesPage: {
       title: "I Nostri Servizi",
       subtitle: "Scopri i servizi e le comodità di lusso che rendono il tuo soggiorno indimenticabile.",
-      description: "A MareSereno, ci dedichiamo a fornire un'esperienza di soggiorno completa e lussuosa. Dai nostri servizi sulla spiaggia alle strutture di benessere, ogni dettaglio è stato curato per garantire il massimo comfort e piacere.",
+      description: "A Silver Horizon Hotel, ci dedichiamo a fornire un'esperienza di soggiorno completa e lussuosa. Dai nostri servizi sulla spiaggia alle strutture di benessere, ogni dettaglio è stato curato per garantire il massimo comfort e piacere.",
       roomAmenities: "Servizi in Camera",
       roomDescription: "Ciascuno dei nostri alloggi è dotato di servizi premium per migliorare il tuo comfort e convenienza.",
       roomItems: {
