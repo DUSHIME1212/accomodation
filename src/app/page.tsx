@@ -131,7 +131,7 @@ export default function HomePage() {
           className="absolute inset-0 bg-cover bg-center"
           style={{
             backgroundImage:
-              "url('https://images.unsplash.com/photo-1615571022219-eb45cf7faa9d?q=80&w=1920&auto=format&fit=crop')",
+              "url('https://pbs.twimg.com/media/Gpzz3OUWIAAmWOd?format=jpg&name=4096x4096')",
             transform: `translateY(${backgroundY}px)`,
             backgroundPosition: `center ${50 + scrollY * 0.05}%`,
           }}

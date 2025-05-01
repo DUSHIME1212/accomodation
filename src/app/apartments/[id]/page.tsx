@@ -358,7 +358,7 @@ export default function ApartmentDetail() {
                           </div>
                         </div>
                         
-                        <p className="text-sm text-muted-foreground mb-2">June 12, 2023</p>
+                        <p className="text-sm text-muted-foreground mb-2">June 12, 2025</p>
                         <p className="text-muted-foreground">
                           {t.apartments.reviews.sampleReview}
                         </p>
