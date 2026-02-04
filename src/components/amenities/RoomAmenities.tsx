@@ -36,10 +36,10 @@ export default function RoomAmenities() {
           ].map((item, index) => (
             <div 
               key={index} 
-              className="flex flex-col items-center p-4 rounded-xl text-center animate-fade-in"
+              className="flex flex-col items-center p-4 -xl text-center animate-fade-in"
               style={{ animationDelay: `${(index + 1) * 50}ms` }}
             >
-              <div className="mb-3 p-3 rounded-full bg-primary/10 text-primary">
+              <div className="mb-3 p-3 -full bg-primary/10 text-primary">
                 {item.icon}
               </div>
               <h3 className="text-sm font-medium">{item.name}</h3>

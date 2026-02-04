@@ -303,7 +303,7 @@ export const en = {
       },
       "6": {
         name: "Garden View Apartment",
-        description: "Peaceful apartment surrounded by lush gardens, just a short walk from the beach."
+        description: "Peaceful apartment sur by lush gardens, just a short walk from the beach."
       }
     },
     amenitiesPage: {

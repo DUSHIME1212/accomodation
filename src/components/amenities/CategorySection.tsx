@@ -57,10 +57,10 @@ export default function CategorySection({ category, index }: CategorySectionProp
           {categoryData.items.map((item, idx) => (
             <div 
               key={idx} 
-              className={`glass-card p-6 rounded-xl flex flex-col items-center text-center animate-fade-in ${isEven ? 'bg-black/40 backdrop-blur-lg border-white/10' : ''}`}
+              className={`glass-card p-6 -xl flex flex-col items-center text-center animate-fade-in ${isEven ? 'bg-black/40 backdrop-blur-lg border-white/10' : ''}`}
               style={{ animationDelay: `${(idx + 1) * 100}ms` }}
             >
-              <div className="mb-4 p-3 rounded-full bg-primary/10 text-primary">
+              <div className="mb-4 p-3 -full bg-primary/10 text-primary">
                 {getIcon(category, idx)}
               </div>
               <h3 className={`text-xl font-semibold mb-2 ${isEven ? 'text-white' : ''}`}>

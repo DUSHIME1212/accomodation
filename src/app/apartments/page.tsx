@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { useLanguage } from "@/components/LanguageContext";
+import { Map, RotateCcw, UsersIcon } from "lucide-react";
 
 // Sample apartments data (will use translations from context)
 const allApartments: ApartmentProps[] = [
@@ -74,7 +75,7 @@ const allApartments: ApartmentProps[] = [
   {
     id: "6",
     name: "Garden View Apartment",
-    description: "Peaceful apartment surrounded by lush gardens, just a short walk from the beach.",
+    description: "Peaceful apartment sur by lush gardens, just a short walk from the beach.",
     price: 160,
     capacity: 3,
     size: 55,
@@ -121,134 +122,133 @@ export default function Apartments() {
   const locations = ["all", ...new Set(allApartments.map(apt => apt.location))];
   
   return (
-    <div className="min-h-screen px-8 md:px-16 lg:px-32 flex flex-col">
-      <Navbar />
+  <div className="min-h-screen bg-[#FAF9F6] dark:bg-[#0a0a0a] transition-colors duration-500">
       
-      <main className="flex-1 pt-20">
-        {/* Header Section */}
-        <section className="relative py-20 bg-gradient-to-r from-sea-light to-white dark:from-sea-dark dark:to-background overflow-hidden">
-          <div className=" relative z-10">
-            <div className="max-w-3xl mx-auto text-center animate-fade-in">
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-                {t.apartments.title}
-              </h1>
-              <p className="text-muted-foreground text-lg mb-6">
-                {t.apartments.subtitle}
-              </p>
-            </div>
+      <main className="flex-1 mt-32">
+        {/* --- LUXE HERO SECTION --- */}
+        <section className="relative h-[65vh] flex items-center justify-center overflow-hidden border-b border-black/5">
+          <div className="absolute inset-0 z-0">
+            {/* Soft Grain Overlay */}
+            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')] opacity-20 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#FAF9F6] dark:to-[#0a0a0a] z-10" />
           </div>
           
-          {/* Decorative elements */}
-          <div className="absolute bottom-0 right-0 w-1/2 h-1/2 opacity-10">
-            <div className="absolute bottom-0 right-0 w-64 h-64 rounded-full bg-primary/50 blur-3xl" />
-            <div className="absolute top-10 right-40 w-48 h-48 rounded-full bg-sea-light blur-3xl" />
+          <div className="relative z-20 text-center max-w-4xl px-6">
+            <span className="text-[#D4AF37] text-[10px] uppercase tracking-[0.6em] mb-6 block font-bold animate-fade-in">
+              The Collection
+            </span>
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif italic text-[#111] dark:text-white mb-8 tracking-tight">
+              {t.apartments.title}
+            </h1>
+            <p className="text-gray-500 dark:text-gray-400 text-sm font-light tracking-widest max-w-xl mx-auto uppercase leading-loose">
+              {t.apartments.subtitle}
+            </p>
           </div>
         </section>
-        
-        {/* Filter Section */}
-        <section className="py-8 border-b">
-          <div className="">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 animate-fade-in">
-              {/* Capacity Filter */}
-              <div>
-                <label className="block text-sm font-medium mb-2">
-                  {t.apartments.filters.guests}
-                </label>
-                <Select value={capacityFilter} onValueChange={setCapacityFilter}>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder={t.apartments.filters.guests} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">{t.apartments.filters.anyGuests}</SelectItem>
-                    <SelectItem value="1">{t.apartments.filters.onePlus}</SelectItem>
-                    <SelectItem value="2">{t.apartments.filters.twoPlus}</SelectItem>
-                    <SelectItem value="3">{t.apartments.filters.threePlus}</SelectItem>
-                    <SelectItem value="4">{t.apartments.filters.fourPlus}</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+
+        {/* --- STICKY CONCIERGE FILTER --- */}
+        <section className=" z-40 bg-white/70 dark:bg-black/70 backdrop-blur-xl border-y border-black/5 shadow-sm">
+          <div className="max-w-7xl mx-auto px-8 py-4">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
               
-              {/* Location Filter */}
-              <div>
-                <label className="block text-sm font-medium mb-2">
-                  {t.apartments.filters.location}
-                </label>
-                <Select value={locationFilter} onValueChange={setLocationFilter}>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder={t.apartments.filters.location} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">{t.apartments.filters.allLocations}</SelectItem>
-                    {locations.filter(loc => loc !== "all").map(location => (
-                      <SelectItem key={location} value={location}>{location}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+              <div className="flex flex-wrap items-center gap-10">
+                {/* Guests Select */}
+                <div className="flex items-center gap-3 group cursor-pointer">
+                  <UsersIcon className="w-3.5 h-3.5 text-[#D4AF37]" />
+                  <Select value={capacityFilter} onValueChange={setCapacityFilter}>
+                    <SelectTrigger className="w-[130px] border-none bg-transparent shadow-none focus:ring-0 text-[11px] uppercase tracking-widest font-bold h-auto p-0">
+                      <SelectValue placeholder="Guests" />
+                    </SelectTrigger>
+                    <SelectContent className="-none border-none shadow-2xl bg-white dark:bg-[#111]">
+                      <SelectItem value="all">Any Capacity</SelectItem>
+                      <SelectItem value="2">2+ Guests</SelectItem>
+                      <SelectItem value="4">4+ Guests</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Location Select */}
+                <div className="flex items-center gap-3 group cursor-pointer">
+                  <Map className="w-3.5 h-3.5 text-[#D4AF37]" />
+                  <Select value={locationFilter} onValueChange={setLocationFilter}>
+                    <SelectTrigger className="w-[160px] border-none bg-transparent shadow-none focus:ring-0 text-[11px] uppercase tracking-widest font-bold h-auto p-0">
+                      <SelectValue placeholder="Location" />
+                    </SelectTrigger>
+                    <SelectContent className="-none border-none shadow-2xl bg-white dark:bg-[#111]">
+                      <SelectItem value="all">All Locations</SelectItem>
+                      {locations.filter(l => l !== "all").map(loc => (
+                        <SelectItem key={loc} value={loc}>{loc}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Price Slider */}
+                <div className="hidden xl:flex items-center gap-8 min-w-[280px]">
+                  <span className="text-[11px] uppercase tracking-widest font-bold text-gray-400">
+                    Range: ${priceRange[0]} — ${priceRange[1]}
+                  </span>
+                  <Slider
+                    min={100}
+                    max={350}
+                    step={10}
+                    value={priceRange}
+                    onValueChange={setPriceRange}
+                    className="w-32"
+                  />
+                </div>
               </div>
-              
-              {/* Price Range Filter */}
-              <div>
-                <label className="block text-sm font-medium mb-2">
-                  {t.apartments.filters.priceRange}: ${priceRange[0]} - ${priceRange[1]}
-                </label>
-                <Slider
-                  defaultValue={[100, 350]}
-                  min={100}
-                  max={350}
-                  step={10}
-                  value={priceRange}
-                  onValueChange={setPriceRange}
-                  className="my-4"
-                />
+
+              <div className="flex items-center gap-6 border-l border-black/5 dark:border-white/5 pl-8">
+                <span className="text-[10px] uppercase tracking-[0.2em] text-gray-400 font-medium">
+                  {filteredApartments.length} Stays Available
+                </span>
+                <button 
+                  onClick={() => {
+                    setCapacityFilter("all");
+                    setLocationFilter("all");
+                    setPriceRange([100, 350]);
+                  }}
+                  className="p-2 hover:bg-black/5 -full transition-colors group"
+                >
+                  <RotateCcw className="w-4 h-4 text-gray-400 group-hover:rotate-[-45deg] transition-transform" />
+                </button>
               </div>
             </div>
-            
-            <div className="flex justify-between items-center mt-6 animate-fade-in [animation-delay:200ms]">
-              <p className="text-muted-foreground">
-                {t.apartments.filters.showing} {filteredApartments.length} {t.apartments.filters.of} {allApartments.length} {t.apartments.filters.accommodations}
-              </p>
+          </div>
+        </section>
+
+        {/* --- GALLERY GRID --- */}
+        <section className="max-w-7xl mx-auto px-8 py-24">
+          {filteredApartments.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-20">
+              {filteredApartments.map((apartment, index) => (
+                <div 
+                  key={apartment.id} 
+                  className="animate-fade-in-up" 
+                  style={{ animationDelay: `${(index % 3) * 150}ms` }}
+                >
+                  <ApartmentCard apartment={apartment} />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="py-40 text-center space-y-8 max-w-md mx-auto">
+              <h3 className="text-3xl font-serif italic text-gray-300">No rooms match your preference.</h3>
+              <p className="text-sm text-gray-400 font-light tracking-wide">Adjust your filters to discover our other exclusive accommodations.</p>
               <Button 
                 variant="outline" 
+                className="-none border-black dark:border-white uppercase tracking-widest text-[10px] px-10 h-12"
                 onClick={() => {
                   setCapacityFilter("all");
                   setLocationFilter("all");
                   setPriceRange([100, 350]);
                 }}
               >
-                {t.apartments.filters.resetFilters}
+                Reset Collection
               </Button>
             </div>
-          </div>
-        </section>
-        
-        {/* Apartments Grid */}
-        <section className="section">
-          <div className="">
-            {filteredApartments.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {filteredApartments.map((apartment, index) => (
-                  <div key={apartment.id} className="animate-fade-in" style={{ animationDelay: `${(index + 1) * 100}ms` }}>
-                    <ApartmentCard apartment={apartment} />
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-12 animate-fade-in">
-                <h3 className="text-xl font-semibold mb-2">{t.apartments.filters.noMatch}</h3>
-                <p className="text-muted-foreground mb-6">{t.apartments.filters.adjustFilters}</p>
-                <Button 
-                  variant="outline" 
-                  onClick={() => {
-                    setCapacityFilter("all");
-                    setLocationFilter("all");
-                    setPriceRange([100, 350]);
-                  }}
-                >
-                  {t.apartments.filters.resetFilters}
-                </Button>
-              </div>
-            )}
-          </div>
+          )}
         </section>
       </main>
     </div>

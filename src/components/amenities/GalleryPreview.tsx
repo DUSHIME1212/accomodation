@@ -22,7 +22,7 @@ export default function GalleryPreview() {
           {Array.from({ length: 10 }).map((_, index) => (
             <div 
               key={index} 
-              className={`aspect-square rounded-lg overflow-hidden group shadow-md transition-transform  ${index === 0 || index === 3 ? 'md:col-span-2 md:row-span-2' : ''}`}
+              className={`aspect-square -lg overflow-hidden group shadow-md transition-transform  ${index === 0 || index === 3 ? 'md:col-span-2 md:row-span-2' : ''}`}
             >
               <img 
                 src={`https://images.unsplash.com/photo-1598605272254-16f0c0ecdfa5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cndhbmRhJTIwaG90ZWxzfGVufDB8fDB8fHww`}

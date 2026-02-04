@@ -9,7 +9,7 @@ export default function AmenitiesHero() {
       <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30 backdrop-blur-sm"></div>
       <div className="px-8 md:px-16 lg:px-32 relative z-10 pt-20">
         <div className="text-center max-w-3xl mx-auto text-white">
-          <span className="text-sm text-primary/90 font-medium uppercase tracking-wider bg-white/10 px-3 py-1 rounded-full">
+          <span className="text-sm text-primary/90 font-medium uppercase tracking-wider bg-white/10 px-3 py-1 -full">
             Silver Horizon Hotel
           </span>
           <h1 className="text-4xl md:text-5xl font-bold mt-4 mb-6 text-white drop-shadow-md">

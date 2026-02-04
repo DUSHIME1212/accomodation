@@ -1,6 +1,5 @@
-
 "use client";
-import { Facebook, Instagram, Twitter, Mail, Phone, MapPin } from "lucide-react";
+import { Facebook, Instagram, Twitter, Mail, Phone, MapPin, ArrowUpRight } from "lucide-react";
 import { useLanguage } from "./LanguageContext";
 import Link from "next/link";
 
@@ -9,99 +8,127 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
   
   return (
-    <footer className="bg-card text-card-foreground pt-16 pb-8 border-t px-8 md:px-16 lg:px-32">
-      <div className="">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-          <div className="animate-fade-in [animation-delay:100ms]">
-            <h4 className="text-xl font-bold mb-4">Silver Horizon Hotel</h4>
-            <p className="text-muted-foreground mb-4">
+    <footer className="bg-[#111111] text-white pt-24 pb-12 px-8 md:px-16 lg:px-32">
+      <div className="max-w-7xl mx-auto">
+        {/* --- TOP SECTION: BRANDING --- */}
+        <div className="mb-20">
+          <h2 className="text-6xl md:text-8xl lg:text-9xl font-serif text-white/10 leading-none select-none">
+            Silver Horizon
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-16 mb-20">
+          {/* Mission & Social */}
+          <div className="md:col-span-4 space-y-8">
+            <h4 className="text-[#D4AF37] text-xs font-bold uppercase tracking-[0.3em]">
+              The Vision
+            </h4>
+            <p className="text-white/60 font-light leading-relaxed text-lg">
               {t.footer.description}
             </p>
-            <div className="flex space-x-4">
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                <Facebook size={20} />
-                <span className="sr-only">Facebook</span>
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                <Instagram size={20} />
-                <span className="sr-only">Instagram</span>
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                <Twitter size={20} />
-                <span className="sr-only">Twitter</span>
-              </a>
+            <div className="flex space-x-6 text-white">
+              {[
+                { Icon: Instagram, label: "Instagram" },
+                { Icon: Facebook, label: "Facebook" },
+                { Icon: Twitter, label: "Twitter" }
+              ].map((social) => (
+                <a 
+                  key={social.label}
+                  href="#" 
+                  className="text-white hover:text-[#D4AF37] transition-all duration-500 flex items-center gap-1 group"
+                >
+                  <social.Icon size={16} strokeWidth={1.5} />
+                  <span className="text-[10px] uppercase tracking-widest hidden lg:block opacity-0 group-hover:opacity-100 transition-opacity">
+                    {social.label}
+                  </span>
+                </a>
+              ))}
             </div>
           </div>
           
-          <div className="animate-fade-in [animation-delay:200ms]">
-            <h4 className="text-xl font-bold mb-4">{t.footer.quickLinks}</h4>
-            <ul className="space-y-2">
+          {/* Navigation */}
+          <div className="md:col-span-2 space-y-8">
+            <h4 className="text-white/40 text-[10px] font-bold uppercase tracking-[0.3em]">
+              Explore
+            </h4>
+            <ul className="space-y-4">
               {[
                 { name: t.nav.home, path: "/" },
                 { name: t.nav.apartments, path: "/apartments" },
                 { name: t.nav.amenities, path: "/amenities" },
                 { name: t.nav.gallery, path: "/gallery" },
-                { name: t.nav.contact, path: "/contact" },
-                { name: t.nav.bookNow, path: "/booking" },
               ].map((link) => (
                 <li key={link.name}>
                   <Link 
                     href={link.path} 
-                    className="text-muted-foreground hover:text-primary transition-colors"
+                    className="text-white/70 hover:text-white transition-colors text-sm font-light flex items-center group"
                   >
                     {link.name}
+                    <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all -translate-y-1 ml-1" />
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
-          
-          <div className="animate-fade-in [animation-delay:300ms]">
-            <h4 className="text-xl font-bold mb-4">{t.footer.contact}</h4>
-            <ul className="space-y-3">
-              <li className="flex items-start">
-                <MapPin className="w-5 h-5 mr-2 mt-0.5 text-primary" />
-                <span className="text-muted-foreground">
-                  123 st<br />
-                  Kigali, Rwanda<br />
-                  Rwanda
+
+          {/* Contact */}
+          <div className="md:col-span-3 space-y-8">
+            <h4 className="text-white/40 text-[10px] font-bold uppercase tracking-[0.3em]">
+              Inquiries
+            </h4>
+            <ul className="space-y-6 text-sm font-light text-white/70">
+              <li className="flex gap-4">
+                <MapPin className="w-4 h-4 text-[#D4AF37] shrink-0" />
+                <span>123 Coastal Avenue<br />Kigali, Rwanda</span>
+              </li>
+              <li className="flex items-center gap-4">
+                <Phone className="w-4 h-4 text-[#D4AF37] shrink-0" />
+                <span>+250 782 454 192</span>
+              </li>
+              <li className="flex items-center gap-4">
+                <Mail className="w-4 h-4 text-[#D4AF37] shrink-0" />
+                <span className="border-b border-white/10 hover:border-[#D4AF37] transition-colors cursor-pointer">
+                  concierge@silverhorizon.com
                 </span>
-              </li>
-              <li className="flex items-center">
-                <Phone className="w-5 h-5 mr-2 text-primary" />
-                <span className="text-muted-foreground">+250 782 454 192</span>
-              </li>
-              <li className="flex items-center">
-                <Mail className="w-5 h-5 mr-2 text-primary" />
-                <span className="text-muted-foreground">info@SilverHorizonHotel.com</span>
               </li>
             </ul>
           </div>
           
-          <div className="animate-fade-in [animation-delay:400ms]">
-            <h4 className="text-xl font-bold mb-4">{t.footer.newsletter}</h4>
-            <p className="text-muted-foreground mb-4">
-              {t.footer.newsletterDesc}
+          {/* Newsletter */}
+          <div className="md:col-span-3 space-y-8">
+            <h4 className="text-white/40 text-[10px] font-bold uppercase tracking-[0.3em]">
+              The Journal
+            </h4>
+            <p className="text-white/50 text-xs font-light leading-relaxed">
+              Join our curated list for exclusive seasonal offers and coastal insights.
             </p>
-            <form className="flex flex-col space-y-2">
+            <form className="relative group">
               <input 
                 type="email" 
-                placeholder={t.footer.yourEmail} 
-                className="rounded-md px-4 py-2 bg-muted text-foreground"
+                placeholder="EMAIL ADDRESS" 
+                className="w-full bg-transparent border-b border-white/20 py-3 text-[10px] tracking-[0.2em] outline-none focus:border-[#D4AF37] transition-colors placeholder:text-white/20"
                 required 
               />
               <button 
                 type="submit" 
-                className="btn-primary mt-2"
+                className="absolute right-0 bottom-3 text-white/40 hover:text-white transition-colors"
               >
-                {t.footer.subscribe}
+                <ArrowUpRight className="w-5 h-5" />
               </button>
             </form>
           </div>
         </div>
         
-        <div className="border-t border-border pt-8 mt-8 text-center text-muted-foreground">
-          <p>&copy; {currentYear} Silver Horizon Hotel. {t.footer.allRights}</p>
+        {/* --- BOTTOM BAR --- */}
+        <div className="border-t border-white/5 pt-12 flex flex-col md:flex-row justify-between items-center gap-6">
+          <p className="text-[10px] uppercase tracking-[0.2em] text-white/30">
+            &copy; {currentYear} Silver Horizon Luxury Hotel Group
+          </p>
+          <div className="flex gap-8 text-[10px] uppercase tracking-[0.2em] text-white/30">
+            <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
+            <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
+            <Link href="/cookies" className="hover:text-white transition-colors">Cookies</Link>
+          </div>
         </div>
       </div>
     </footer>

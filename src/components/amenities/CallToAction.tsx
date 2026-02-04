@@ -18,7 +18,7 @@ export default function CallToAction() {
           asChild 
           variant="outline" 
           size="lg" 
-          className="bg-white text-primary hover:bg-white/90 hover:text-primary rounded-full"
+          className="bg-white text-primary hover:bg-white/90 hover:text-primary -full"
         >
           <Link href="/booking">{t.home.cta.bookNow}</Link>
         </Button>

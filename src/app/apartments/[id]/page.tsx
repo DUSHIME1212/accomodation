@@ -1,5 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -8,12 +9,14 @@ import { useLanguage } from "@/components/LanguageContext";
 import { 
   Users, Maximize, MapPin, Heart, Share, Star, Calendar, 
   ChevronRight, Coffee, Wifi, Tv, AirVent, Bath, BedDouble, 
-  Check, ArrowLeft
+  Check, ArrowLeft,
+  ShieldCheck
 } from "lucide-react";
 import { type ApartmentProps } from "@/components/ApartmentCard";
 import BookingForm from "@/components/BookingForm";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 // Sample apartments data
 const apartmentsData: ApartmentProps[] = [
@@ -75,7 +78,7 @@ const apartmentsData: ApartmentProps[] = [
   {
     id: "6",
     name: "Garden View Apartment",
-    description: "Peaceful apartment surrounded by lush gardens, just a short walk from the beach.",
+    description: "Peaceful apartment sur by lush gardens, just a short walk from the beach.",
     price: 160,
     capacity: 3,
     size: 55,
@@ -122,323 +125,216 @@ export default function ApartmentDetail() {
   const [selectedImage, setSelectedImage] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   
+  const containerRef = useRef(null);
+  const imageRef = useRef(null);
+
   useEffect(() => {
-    // Scroll to top when component mounts
     window.scrollTo(0, 0);
-    
-    // Find apartment by id
     const foundApartment = apartmentsData.find(apt => apt.id === id);
-    if (foundApartment) {
-      setApartment(foundApartment);
-    }
+    if (foundApartment) setApartment(foundApartment);
+
+    // GSAP Entrance Animations
+    const ctx = gsap.context(() => {
+      gsap.from(".reveal", {
+        y: 40,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.15,
+        ease: "power4.out",
+      });
+
+      gsap.to(".parallax-img", {
+        scrollTrigger: {
+          trigger: ".parallax-img",
+          start: "top bottom",
+          scrub: true
+        },
+        scale: 1.1,
+        ease: "none"
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
   }, [id]);
-  
-  if (!apartment) {
-    return (
-      <div className="min-h-screen flex flex-col">
-        <Navbar />
-        <main className="flex-1 pt-20 flex items-center justify-center">
-          <div className="text-center">
-            <h1 className="text-2xl font-bold">{t.notFound.title}</h1>
-            <p className="mt-2 text-muted-foreground mb-4">{t.notFound.description}</p>
-            <Button asChild>
-              <Link href="/apartments">{t.notFound.returnHome}</Link>
-            </Button>
-          </div>
-        </main>
-        <Footer />
-      </div>
-    );
-  }
-  
-  // Use translated name and description if available
+
+  if (!apartment) return null; // Or your notFound state
+
   const translatedName = language !== 'en' && t.apartmentDescriptions[apartment.id as keyof typeof t.apartmentDescriptions]?.name 
     ? t.apartmentDescriptions[apartment.id as keyof typeof t.apartmentDescriptions].name 
     : apartment.name;
-    
-  const translatedDescription = language !== 'en' && t.apartmentDescriptions[apartment.id as keyof typeof t.apartmentDescriptions]?.description 
-    ? t.apartmentDescriptions[apartment.id as keyof typeof t.apartmentDescriptions].description 
-    : apartment.description;
-  
+
   return (
-    <div className="min-h-screen flex flex-col">
+    <div ref={containerRef} className="min-h-screen bg-[#FCFBFA] dark:bg-[#080808]">
       <Navbar />
       
-      <main className="flex-1 px-8 md:px-16 lg:px-32 pt-20">
-        {/* Back button */}
-        <div className=" py-4">
-          <Button variant="ghost" size="sm" asChild className="flex size-fit items-center p-2">
-            <Link href="/apartments">
-              <ArrowLeft className="h-4 w-4 mr-1" />
+      <main className="px-6 md:px-12 lg:px-24 pt-28 pb-20">
+        
+        {/* Navigation & Header */}
+        <div className="reveal flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+          <div className="space-y-4">
+            <Link href="/apartments" className="inline-flex items-center text-[10px] uppercase tracking-[0.3em] font-bold text-muted-foreground hover:text-primary transition-colors">
+              <ArrowLeft className="h-3 w-3 mr-2" />
               {t.apartments.title}
             </Link>
-          </Button>
+            <h1 className="text-4xl md:text-6xl font-serif italic tracking-tight">{translatedName}</h1>
+            <div className="flex items-center space-x-4 text-sm tracking-wide text-muted-foreground">
+              <div className="flex items-center">
+                <MapPin className="h-4 w-4 mr-1 text-primary" />
+                <span>Costa Bella, Italy</span>
+              </div>
+              <span className="h-1 w-1 -full bg-border" />
+              <div className="flex items-center text-amber-500">
+                <Star className="h-4 w-4 fill-current mr-1" />
+                <span className="font-semibold">4.9</span>
+                <span className="ml-1 text-xs opacity-70">(124 reviews)</span>
+              </div>
+            </div>
+          </div>
+          
+          <div className="flex gap-3">
+             <Button variant="outline" size="icon" onClick={() => setIsLiked(!isLiked)} className="-full hover:bg-red-50 dark:hover:bg-red-950/20 border-black/5 dark:border-white/5 shadow-sm">
+                <Heart className={cn("h-4 w-4 transition-colors", isLiked ? "fill-red-500 text-red-500" : "")} />
+             </Button>
+             <Button variant="outline" size="icon" className="-full border-black/5 dark:border-white/5 shadow-sm">
+                <Share className="h-4 w-4" />
+             </Button>
+          </div>
         </div>
-        
-        {/* Gallery Section */}
-        <section className=" pb-8">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
-            {/* Main Image */}
-            <div className="lg:col-span-3 rounded-xl overflow-hidden">
+
+        {/* Cinematic Gallery Grid */}
+        <section className="reveal mb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 h-[70vh]">
+            <div className="lg:col-span-8 relative -2xl overflow-hidden group">
               <img 
                 src={apartmentGallery[selectedImage]} 
                 alt={translatedName} 
-                className="w-full h-[450px] object-cover transition-all duration-500 hover:scale-105"
+                className="parallax-img w-full h-full object-cover transition-transform duration-1000"
               />
+              <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500" />
             </div>
             
-            {/* Side Images */}
-            <div className="lg:col-span-2 grid grid-cols-2 gap-4">
-              {apartmentGallery.slice(1, 5).map((img, index) => (
-                <div 
-                  key={index} 
-                  className="relative rounded-xl overflow-hidden cursor-pointer"
-                  onClick={() => setSelectedImage(index + 1)}
-                >
-                  <img 
-                    src={img} 
-                    alt={`${translatedName} view ${index + 2}`} 
-                    className="w-full h-[215px] object-cover transition-all duration-500 hover:scale-105"
-                  />
-                  {index === 3 && (
-                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center text-white font-medium">
-                      +10 {t.gallery.title}
-                    </div>
-                  )}
+            <div className="hidden lg:grid lg:col-span-4 grid-rows-2 gap-3">
+              {apartmentGallery.slice(1, 3).map((img, index) => (
+                <div key={index} className="relative -2xl overflow-hidden cursor-pointer group" onClick={() => setSelectedImage(index + 1)}>
+                  <img src={img} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Gallery" />
+                  <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors" />
                 </div>
               ))}
             </div>
           </div>
         </section>
-        
-        {/* Main Content */}
-        <section className=" py-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Left Column - Apartment Details */}
-            <div className="lg:col-span-2">
-              <div className="flex justify-between items-start mb-4">
-                <div>
-                  <div className="flex items-center space-x-2 mb-2">
-                    <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium">
-                      {apartment.location}
-                    </span>
-                    <div className="flex items-center text-amber-500">
-                      <Star className="h-4 w-4 fill-current" />
-                      <span className="ml-1 font-medium">4.9</span>
-                      <span className="text-muted-foreground text-sm ml-1">(124 reviews)</span>
-                    </div>
-                  </div>
-                  <h1 className="text-3xl font-bold mb-1">{translatedName}</h1>
-                  <div className="flex items-center text-muted-foreground">
-                    <MapPin className="h-4 w-4 mr-1" />
-                    <span>Costa Bella, Italy</span>
-                  </div>
-                </div>
-                
-                <div className="flex space-x-2">
-                  <Button
-                    variant="outline" 
-                    size="icon"
-                    onClick={() => setIsLiked(!isLiked)}
-                    className={`rounded-full ${isLiked ? 'text-red-500' : ''}`}
-                  >
-                    <Heart className={`h-5 w-5 ${isLiked ? 'fill-current' : ''}`} />
-                    <span className="sr-only">Like</span>
-                  </Button>
-                  <Button variant="outline" size="icon" className="rounded-full">
-                    <Share className="h-5 w-5" />
-                    <span className="sr-only">Share</span>
-                  </Button>
+
+        {/* Content Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+          
+          {/* Detailed Specs */}
+          <div className="lg:col-span-7">
+            <div className="reveal grid grid-cols-2 md:grid-cols-4 gap-8 py-10 border-t border-b border-black/5 dark:border-white/5">
+              <div className="space-y-1">
+                <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">{t.bookingForm.adults}</p>
+                <div className="flex items-center font-serif text-xl italic">
+                  <Users className="h-4 w-4 mr-2 text-primary" /> {apartment.capacity} Guests
                 </div>
               </div>
-              
-              {/* Key features */}
-              <div className="flex flex-wrap gap-4 py-4 border-t border-b my-4">
-                <div className="flex items-center">
-                  <Users className="h-5 w-5 mr-2 text-muted-foreground" />
-                  <span>{apartment.capacity} {apartment.capacity === 1 ? t.bookingForm.adult : t.bookingForm.adults}</span>
-                </div>
-                <div className="flex items-center">
-                  <BedDouble className="h-5 w-5 mr-2 text-muted-foreground" />
-                  <span>{apartment.capacity <= 2 ? 1 : 2} {apartment.capacity <= 2 ? t.booking.accommodationSelect.bed : t.booking.accommodationSelect.beds}</span>
-                </div>
-                <div className="flex items-center">
-                  <Bath className="h-5 w-5 mr-2 text-muted-foreground" />
-                  <span>1 {t.booking.accommodationSelect.bath}</span>
-                </div>
-                <div className="flex items-center">
-                  <Maximize className="h-5 w-5 mr-2 text-muted-foreground" />
-                  <span>{apartment.size} m²</span>
+              <div className="space-y-1">
+                <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Living Space</p>
+                <div className="flex items-center font-serif text-xl italic">
+                  <Maximize className="h-4 w-4 mr-2 text-primary" /> {apartment.size} m²
                 </div>
               </div>
-              
-              {/* Tabs for details */}
-              <Tabs defaultValue="description" className="mt-8">
-                <TabsList className="grid w-full grid-cols-3">
-                  <TabsTrigger value="description">{t.apartments.tabs.description}</TabsTrigger>
-                  <TabsTrigger value="features">{t.apartments.tabs.features}</TabsTrigger>
-                  <TabsTrigger value="location">{t.apartments.tabs.location}</TabsTrigger>
-                </TabsList>
-                
-                <TabsContent value="description" className="mt-6">
-                  <div className="space-y-4">
-                    <p className="text-lg">{translatedDescription}</p>
-                    <p className="text-muted-foreground">
-                      {t.apartments.detailDescription}
-                    </p>
-                  </div>
-                </TabsContent>
-                
-                <TabsContent value="features" className="mt-6">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {apartment.features.map((feature, index) => (
-                      <div key={index} className="flex items-center p-3 rounded-lg border">
-                        <div className="flex items-center justify-center h-10 w-10 rounded-full bg-primary/10 text-primary mr-3">
-                          {getFeatureIcon(feature)}
-                        </div>
-                        <span>{feature}</span>
-                      </div>
-                    ))}
-                  </div>
-                </TabsContent>
-                
-                <TabsContent value="location" className="mt-6">
-                  <div className="space-y-4">
-                    <div className="aspect-video rounded-lg overflow-hidden bg-muted">
-                      <iframe 
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12345.67890!2d12.3456789!3d43.2109876!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDPCsDA1JzI0LjAiTiAxMsKwMTInMDYuMCJF!5e0!3m2!1sen!2sit!4v1629789012345!5m2!1sen!2sit" 
-                        width="100%" 
-                        height="100%" 
-                        style={{ border: 0 }} 
-                        allowFullScreen={true} 
-                        loading="lazy"
-                      ></iframe>
-                    </div>
-                    <p className="text-muted-foreground">
-                      {t.apartments.locationDescription}
-                    </p>
-                  </div>
-                </TabsContent>
-              </Tabs>
-              
-              {/* Reviews preview */}
-              <div className="mt-10">
-                <div className="flex justify-between items-center mb-6">
-                  <h3 className="text-xl font-bold">{t.apartments.reviews.title}</h3>
-                  <Button variant="outline" className="text-sm">
-                    {t.apartments.reviews.seeAll}
-                    <ChevronRight className="h-4 w-4 ml-1" />
-                  </Button>
+              <div className="space-y-1">
+                <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Bedrooms</p>
+                <div className="flex items-center font-serif text-xl italic">
+                  <BedDouble className="h-4 w-4 mr-2 text-primary" /> 2 Master
                 </div>
-                
-                <div className="space-y-6">
-                  {/* Sample review */}
-                  <div className="p-6 rounded-xl bg-card border">
-                    <div className="flex items-start">
-                      <div className="mr-4 flex-shrink-0">
-                        <div className="h-12 w-12 rounded-full overflow-hidden">
-                          <img 
-                            src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=faces" 
-                            alt="Reviewer" 
-                            className="h-full w-full object-cover"
-                          />
-                        </div>
-                      </div>
-                      
-                      <div className="flex-1">
-                        <div className="flex justify-between items-center mb-1">
-                          <h4 className="font-semibold">Sophie Martinez</h4>
-                          <div className="flex">
-                            {[1, 2, 3, 4, 5].map((star) => (
-                              <Star 
-                                key={star} 
-                                className="h-4 w-4 fill-amber-500 text-amber-500" 
-                              />
-                            ))}
-                          </div>
-                        </div>
-                        
-                        <p className="text-sm text-muted-foreground mb-2">June 12, 2025</p>
-                        <p className="text-muted-foreground">
-                          {t.apartments.reviews.sampleReview}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+              </div>
+              <div className="space-y-1">
+                <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Security</p>
+                <div className="flex items-center font-serif text-xl italic text-green-600">
+                  <ShieldCheck className="h-4 w-4 mr-2" /> Verified
                 </div>
               </div>
             </div>
-            
-            {/* Right Column - Booking Widget */}
-            <div className="lg:col-span-1">
-              <div className="sticky top-24 glass-card p-6 rounded-xl">
-                <div className="flex justify-between items-center mb-4">
-                  <div>
-                    <span className="text-2xl font-bold">${apartment.price}</span>
-                    <span className="text-muted-foreground"> / {t.booking.summary.night}</span>
-                  </div>
-                  <div className="flex items-center text-amber-500">
-                    <Star className="h-4 w-4 fill-current" />
-                    <span className="ml-1 font-medium">4.9</span>
-                  </div>
+
+            <Tabs defaultValue="description" className="mt-12 reveal">
+              <TabsList className="bg-transparent border-b border-black/5 dark:border-white/5 w-full justify-start -none h-auto p-0 gap-8">
+                {["description", "features", "location"].map((tab) => (
+                  <TabsTrigger 
+                    key={tab} 
+                    value={tab} 
+                    className="-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-0 py-4 text-[11px] uppercase tracking-widest font-bold"
+                  >
+                    {tab}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+              
+              <TabsContent value="description" className="mt-10 leading-relaxed text-muted-foreground space-y-6 max-w-2xl">
+                <p className="text-xl text-foreground font-serif italic">Experience unrivaled serenity...</p>
+                <p>{apartment.description}</p>
+                <p>{t.apartments.detailDescription}</p>
+              </TabsContent>
+
+              <TabsContent value="features" className="mt-10">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {apartment.features.map((feature, index) => (
+                    <div key={index} className="flex items-center space-x-4 p-4 -xl bg-white dark:bg-white/5 border border-black/[0.03] dark:border-white/[0.03]">
+                      <div className="p-2 bg-primary/5 text-primary -lg">
+                        {getFeatureIcon(feature)}
+                      </div>
+                      <span className="text-sm font-medium tracking-wide">{feature}</span>
+                    </div>
+                  ))}
                 </div>
-                
-                <BookingForm />
+              </TabsContent>
+            </Tabs>
+          </div>
+
+          {/* Floating Booking Widget */}
+          <div className="lg:col-span-5">
+            <div className="reveal sticky top-32 p-8 -3xl bg-white dark:bg-[#111] border border-black/5 dark:border-white/5 shadow-[0_20px_50px_rgba(0,0,0,0.05)] dark:shadow-none">
+              <div className="flex justify-between items-baseline mb-8">
+                <div>
+                  <span className="text-3xl font-serif italic">${apartment.price}</span>
+                  <span className="text-muted-foreground text-xs uppercase tracking-tighter ml-1">/ Night</span>
+                </div>
+                <div className="bg-green-500/10 text-green-600 text-[10px] font-bold px-2 py-1 ">AVAILABLE</div>
               </div>
+              
+              <BookingForm />
+              
+              <p className="text-[10px] text-center text-muted-foreground mt-6 tracking-widest uppercase">
+                Best price guarantee for direct bookings
+              </p>
             </div>
           </div>
-        </section>
-        
-        {/* Similar apartments */}
-        <section className="py-12 border-t mt-12">
-          <h2 className="text-2xl font-bold mb-6">{t.apartments.similarProperties}</h2>
+
+        </div>
+
+        {/* Similar Properties - Refined Cards */}
+        <section className="mt-32 border-t border-black/5 dark:border-white/5 pt-20">
+          <div className="flex justify-between items-end mb-12">
+            <h2 className="text-4xl font-serif italic">{t.apartments.similarProperties}</h2>
+            <Link href="/apartments" className="text-[11px] font-bold uppercase tracking-[0.2em] border-b border-primary pb-1">View All Suites</Link>
+          </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {apartmentsData
-              .filter(apt => apt.id !== apartment.id)
-              .slice(0, 3)
-              .map(apt => (
-                <div key={apt.id} className="group rounded-xl overflow-hidden border shadow-sm hover:shadow-md transition-all duration-300">
-                  <Link href={`/apartments/${apt.id}`} className="block">
-                    <div className="relative h-48 overflow-hidden">
-                      <img 
-                        src={apt.image} 
-                        alt={apt.name} 
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                      />
-                      <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 to-transparent text-white">
-                        <h3 className="font-bold">{apt.name}</h3>
-                        <div className="flex items-center text-sm">
-                          <MapPin className="h-3 w-3 mr-1" />
-                          <span>{apt.location}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="p-4">
-                      <div className="flex justify-between items-center">
-                        <div className="flex items-center space-x-3 text-sm text-muted-foreground">
-                          <div className="flex items-center">
-                            <Users className="h-4 w-4 mr-1" />
-                            <span>{apt.capacity}</span>
-                          </div>
-                          <div className="flex items-center">
-                            <Maximize className="h-4 w-4 mr-1" />
-                            <span>{apt.size} m²</span>
-                          </div>
-                        </div>
-                        <div>
-                          <span className="font-bold">${apt.price}</span>
-                          <span className="text-muted-foreground text-sm"> / {t.booking.summary.night}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {apartmentsData.filter(apt => apt.id !== apartment.id).slice(0, 3).map(apt => (
+              <Link href={`/apartments/${apt.id}`} key={apt.id} className="group block space-y-4">
+                <div className="aspect-[4/5] overflow-hidden -2xl relative">
+                   <img src={apt.image} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt={apt.name} />
+                   <div className="absolute top-4 right-4 bg-white/90 dark:bg-black/90 px-3 py-1 -full text-[10px] font-bold tracking-widest">${apt.price}</div>
                 </div>
-              ))
-            }
+                <div>
+                  <h3 className="text-lg font-serif italic group-hover:text-primary transition-colors">{apt.name}</h3>
+                  <p className="text-[10px] uppercase tracking-widest text-muted-foreground">{apt.location}</p>
+                </div>
+              </Link>
+            ))}
           </div>
         </section>
       </main>
+      <Footer />
     </div>
   );
 }

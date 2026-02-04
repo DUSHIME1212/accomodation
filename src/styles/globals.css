@@ -131,11 +131,36 @@
 }
 
 .glass-card {
-  @apply bg-white/70 dark:bg-black/30 backdrop-blur-lg border border-white/20 dark:border-white/10 rounded-xl shadow-lg;
+  @apply bg-white/70 dark:bg-black/30 backdrop-blur-lg border border-white/20 dark:border-white/10 -xl shadow-lg;
 }
 
 .wave-animation {
   animation: wave 12s linear infinite;
   animation-delay: -2s;
   transform-origin: center bottom;
+}
+
+@layer base {
+  :root {
+    --background: 40 33% 98%; /* Bone / Off-white */
+    --primary: 45 65% 53%;   /* Gold #D4AF37 */
+  }
+
+  .dark {
+    --background: 0 0% 4%;    /* Deep Onyx #0a0a0a */
+  }
+}
+
+@layer utilities {
+  .font-serif {
+    font-family: 'Playfair Display', serif; /* Or any luxury serif font */
+  }
+
+  .clip-path-open {
+    clip-path: circle(150% at 100% 0%);
+  }
+
+  .clip-path-closed {
+    clip-path: circle(0% at 100% 0%);
+  }
 }
