@@ -102,9 +102,9 @@ export default function Navbar() {
             <ThemeToggle />
           </div>
           
-          <Button 
+<Button 
             asChild 
-            className="-none bg-black text-white dark:bg-white dark:text-black px-6 md:px-8 py-5 text-[9px] uppercase tracking-widest font-bold hover:bg-primary transition-all duration-500 shadow-xl shadow-black/5"
+            className="rounded-none bg-black text-white dark:bg-white dark:text-black px-6 md:px-8 py-5 text-[9px] uppercase tracking-widest font-bold hover:bg-primary transition-all duration-500 shadow-xl shadow-black/5"
           >
             <Link href="/booking">{t.nav.bookNow}</Link>
           </Button>

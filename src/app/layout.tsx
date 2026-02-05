@@ -3,7 +3,7 @@ import { LanguageProvider } from "@/components/LanguageContext";
 import Navbar from "@/components/Navbar";
 // import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
-import "@/styles/globals.css";
+import "../styles/globals.css";
 
 import { type Metadata } from "next";
 import { Geist } from "next/font/google";

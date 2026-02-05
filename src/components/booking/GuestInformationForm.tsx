@@ -20,10 +20,10 @@ export default function GuestInformationForm({
   return (
     <form className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-1000">
       
-      {/* Section 1: Guest Dossier */}
+{/* Section 1: Guest Dossier */}
       <section className="space-y-8">
         <div className="flex items-center gap-4">
-          <div className="p-2 bg-primary/5 -full">
+          <div className="p-2 bg-primary/5 rounded-full">
             <User className="w-4 h-4 text-primary" />
           </div>
           <h2 className="text-sm uppercase tracking-[0.3em] font-bold text-foreground/70">
@@ -32,7 +32,7 @@ export default function GuestInformationForm({
           <div className="h-px flex-1 bg-gradient-to-r from-border to-transparent" />
         </div>
 
-        <div className="glass-card p-8 bg-white/40 dark:bg-black/20 border-white/40 dark:border-white/5 backdrop-blur-xl -[2rem] space-y-8 shadow-2xl shadow-black/5">
+        <div className="glass-card p-8 bg-white/40 dark:bg-black/20 border-white/40 dark:border-white/5 backdrop-blur-xl rounded-[2rem] space-y-8 shadow-2xl shadow-black/5">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8">
             <PremiumField 
               label="Given Name" 
@@ -67,10 +67,10 @@ export default function GuestInformationForm({
         </div>
       </section>
 
-      {/* Section 2: Residency */}
+{/* Section 2: Residency */}
       <section className="space-y-8">
         <div className="flex items-center gap-4">
-          <div className="p-2 bg-primary/5 -full">
+          <div className="p-2 bg-primary/5 rounded-full">
             <Globe className="w-4 h-4 text-primary" />
           </div>
           <h2 className="text-sm uppercase tracking-[0.3em] font-bold text-foreground/70">
@@ -79,7 +79,7 @@ export default function GuestInformationForm({
           <div className="h-px flex-1 bg-gradient-to-r from-border to-transparent" />
         </div>
 
-        <div className="glass-card p-8 bg-white/40 dark:bg-black/20 border-white/40 dark:border-white/5 backdrop-blur-xl -[2rem] space-y-8 shadow-2xl shadow-black/5">
+        <div className="glass-card p-8 bg-white/40 dark:bg-black/20 border-white/40 dark:border-white/5 backdrop-blur-xl rounded-[2rem] space-y-8 shadow-2xl shadow-black/5">
           <PremiumField 
             label="Street Address" 
             id="address" 
@@ -94,10 +94,10 @@ export default function GuestInformationForm({
         </div>
       </section>
 
-      {/* Section 3: Concierge Notes */}
+{/* Section 3: Concierge Notes */}
       <section className="space-y-8">
         <div className="flex items-center gap-4">
-          <div className="p-2 bg-primary/5 -full">
+          <div className="p-2 bg-primary/5 rounded-full">
             <MessageSquare className="w-4 h-4 text-primary" />
           </div>
           <h2 className="text-sm uppercase tracking-[0.3em] font-bold text-foreground/70">
@@ -113,15 +113,15 @@ export default function GuestInformationForm({
             value={formData.specialRequests} 
             onChange={onInputChange}
             placeholder="Dietary preferences, arrival arrangements, or specific celebrations..."
-            className="w-full h-32 -2xl border-black/5 dark:border-white/10 bg-white/50 dark:bg-black/20 px-4 py-4 text-sm focus:ring-1 focus:ring-primary outline-none transition-all placeholder:italic placeholder:text-muted-foreground/50 resize-none"
+            className="w-full h-32 rounded-2xl border-black/5 dark:border-white/10 bg-white/50 dark:bg-black/20 px-4 py-4 text-sm focus:ring-1 focus:ring-primary outline-none transition-all placeholder:italic placeholder:text-muted-foreground/50 resize-none"
           />
         </div>
       </section>
 
-      {/* Section 4: Secure Settlement */}
+{/* Section 4: Secure Settlement */}
       <section className="space-y-8">
         <div className="flex items-center gap-4">
-          <div className="p-2 bg-primary/5 -full">
+          <div className="p-2 bg-primary/5 rounded-full">
             <ShieldCheck className="w-4 h-4 text-primary" />
           </div>
           <h2 className="text-sm uppercase tracking-[0.3em] font-bold text-foreground/70">
@@ -131,17 +131,17 @@ export default function GuestInformationForm({
         </div>
 
         <Tabs defaultValue="credit-card" onValueChange={(value) => onSelectChange("paymentMethod", value)} className="w-full">
-          <TabsList className="inline-flex p-1 bg-black/5 dark:bg-white/5 -full mb-8">
-            <TabsTrigger value="credit-card" className="-full px-8 py-2 data-[state=active]:bg-white dark:data-[state=active]:bg-white/10 data-[state=active]:shadow-lg text-[10px] uppercase tracking-widest font-bold">
+          <TabsList className="inline-flex p-1 bg-black/5 dark:bg-white/5 rounded-full mb-8">
+            <TabsTrigger value="credit-card" className="rounded-full px-8 py-2 data-[state=active]:bg-white dark:data-[state=active]:bg-white/10 data-[state=active]:shadow-lg text-[10px] uppercase tracking-widest font-bold">
               Credit Card
             </TabsTrigger>
-            <TabsTrigger value="pay-at-property" className="-full px-8 py-2 data-[state=active]:bg-white dark:data-[state=active]:bg-white/10 data-[state=active]:shadow-lg text-[10px] uppercase tracking-widest font-bold">
+            <TabsTrigger value="pay-at-property" className="rounded-full px-8 py-2 data-[state=active]:bg-white dark:data-[state=active]:bg-white/10 data-[state=active]:shadow-lg text-[10px] uppercase tracking-widest font-bold">
               Pay At Property
             </TabsTrigger>
           </TabsList>
 
           <TabsContent value="credit-card" className="space-y-8 animate-in fade-in duration-500">
-            <div className="glass-card p-8 bg-white/40 dark:bg-black/20 border-white/40 dark:border-white/5 backdrop-blur-xl -[2rem] space-y-8">
+            <div className="glass-card p-8 bg-white/40 dark:bg-black/20 border-white/40 dark:border-white/5 backdrop-blur-xl rounded-[2rem] space-y-8">
               <PremiumField label="Name on Card" id="cardName" value={formData.cardName} onChange={onInputChange} />
               <div className="space-y-2">
                 <Label className="text-[10px] uppercase tracking-widest text-muted-foreground font-semibold ml-1">Card Number</Label>
@@ -152,7 +152,7 @@ export default function GuestInformationForm({
                     value={formData.cardNumber} 
                     onChange={onInputChange}
                     placeholder="0000 0000 0000 0000"
-                    className="h-12 bg-transparent border-0 border-b border-black/10 dark:border-white/10 -none px-0 text-lg tracking-[0.2em] focus-visible:ring-0 focus-visible:border-primary transition-all"
+                    className="h-12 bg-transparent border-0 border-b border-black/10 dark:border-white/10 rounded-none px-0 text-lg tracking-[0.2em] focus-visible:ring-0 focus-visible:border-primary transition-all"
                   />
                   <CreditCard className="absolute right-0 top-3 w-5 h-5 text-muted-foreground/30" />
                 </div>
@@ -165,7 +165,7 @@ export default function GuestInformationForm({
           </TabsContent>
 
           <TabsContent value="pay-at-property" className="animate-in fade-in duration-500">
-             <div className="p-8 border border-dashed border-primary/20 -[2rem] bg-primary/[0.02]">
+             <div className="p-8 border border-dashed border-primary/20 rounded-[2rem] bg-primary/[0.02]">
                 <p className="text-sm text-muted-foreground leading-relaxed italic">
                   A valid credit card is required upon arrival for security purposes. 
                   Payment will be finalized during your stay. We look forward to welcoming you.
@@ -193,7 +193,7 @@ function PremiumField({ label, id, type = "text", value, onChange, placeholder }
         onChange={onChange} 
         placeholder={placeholder}
         required 
-        className="h-10 bg-transparent border-0 border-b border-black/10 dark:border-white/10 -none px-0 text-sm focus-visible:ring-0 focus-visible:border-primary transition-all placeholder:text-muted-foreground/30"
+        className="h-10 bg-transparent border-0 border-b border-black/10 dark:border-white/10 rounded-none px-0 text-sm focus-visible:ring-0 focus-visible:border-primary transition-all placeholder:text-muted-foreground/30"
       />
     </div>
   );

@@ -182,7 +182,7 @@ export default function ApartmentDetail() {
                 <MapPin className="h-4 w-4 mr-1 text-primary" />
                 <span>Costa Bella, Italy</span>
               </div>
-              <span className="h-1 w-1 -full bg-border" />
+<span className="h-1 w-1 rounded-full bg-border" />
               <div className="flex items-center text-amber-500">
                 <Star className="h-4 w-4 fill-current mr-1" />
                 <span className="font-semibold">4.9</span>
@@ -192,7 +192,7 @@ export default function ApartmentDetail() {
           </div>
           
           <div className="flex gap-3">
-             <Button variant="outline" size="icon" onClick={() => setIsLiked(!isLiked)} className="-full hover:bg-red-50 dark:hover:bg-red-950/20 border-black/5 dark:border-white/5 shadow-sm">
+<Button variant="outline" size="icon" onClick={() => setIsLiked(!isLiked)} className="rounded-full hover:bg-red-50 dark:hover:bg-red-950/20 border-black/5 dark:border-white/5 shadow-sm">
                 <Heart className={cn("h-4 w-4 transition-colors", isLiked ? "fill-red-500 text-red-500" : "")} />
              </Button>
              <Button variant="outline" size="icon" className="-full border-black/5 dark:border-white/5 shadow-sm">

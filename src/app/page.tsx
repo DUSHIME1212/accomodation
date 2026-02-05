@@ -182,7 +182,7 @@ export default function HomePage() {
       </section>
 
       {/* --- BOOKING SECTION (Clean & Focused) --- */}
-      <section className="py-32 px-8 lg:px-32 bg-[#111111] text-white overflow-hidden relative">
+      <section className="py-32 px-8 lg:px-32 bg-foreground text-white overflow-hidden relative">
         <div className="absolute top-0 right-0 w-1/2 h-full opacity-20 pointer-events-none">
            <img src="https://images.unsplash.com/photo-1596394516093-501ba68a0ba6" className="w-full h-full object-cover" />
         </div>

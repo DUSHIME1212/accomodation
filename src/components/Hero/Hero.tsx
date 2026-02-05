@@ -47,7 +47,7 @@ export default function Hero({ t }: { t: any }) {
             </span>
           </div>
 
-          <h1 className="text-6xl md:text-7xl xl:text-8xl font-serif leading-[0.9] tracking-tighter">
+          <h1 className="text-6xl md:text-7xl xl:text-8xl font-serif text-foreground leading-[0.9] tracking-tighter">
             The <span className="italic">Pure</span> <br />
             Essence of <br />
             Respite.

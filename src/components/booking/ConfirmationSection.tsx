@@ -50,18 +50,18 @@ export default function ConfirmationSection({
           A bespoke digital itinerary has been dispatched to <span className="text-foreground font-bold">{formData.email}</span>.
         </p>
         
-        <div className="bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 -2xl p-6 mb-12 inline-block">
+<div className="bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 rounded-2xl p-6 mb-12 inline-block">
           <p className="text-[10px] uppercase tracking-[0.4em] text-muted-foreground mb-2 font-bold">Booking Reference</p>
           <p className="text-2xl font-mono tracking-tighter text-primary">
             HB-{Math.floor(Math.random() * 100000).toString().padStart(5, '0')}
           </p>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button asChild variant="outline" className="-full px-10 h-14 border-black/10 dark:border-white/10 uppercase text-[10px] tracking-widest font-bold">
+<div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Button asChild variant="outline" className="rounded-full px-10 h-14 border-black/10 dark:border-white/10 uppercase text-[10px] tracking-widest font-bold">
             <Link href="/">Return Home</Link>
           </Button>
-          <Button className="-full px-10 h-14 bg-primary text-white uppercase text-[10px] tracking-widest font-bold shadow-xl shadow-primary/20 hover:scale-105 transition-transform">
+          <Button className="rounded-full px-10 h-14 bg-primary text-white uppercase text-[10px] tracking-widest font-bold shadow-xl shadow-primary/20 hover:scale-105 transition-transform">
             Manage My Stay
           </Button>
         </div>
@@ -85,7 +85,7 @@ export default function ConfirmationSection({
             <h3 className="text-lg font-serif italic mb-6">Accommodation Brief</h3>
             {apartment && (
               <div className="flex flex-col md:flex-row gap-6 p-2 group">
-                <div className="w-full md:w-48 h-48 -2xl overflow-hidden shadow-2xl transition-transform duration-700 group-hover:scale-[1.02]">
+<div className="w-full md:w-48 h-48 rounded-2xl overflow-hidden shadow-2xl transition-transform duration-700 group-hover:scale-[1.02]">
                   <img src={apartment.image} alt={apartment.name} className="w-full h-full object-cover" />
                 </div>
                 <div className="flex-1 space-y-4">
@@ -122,7 +122,7 @@ export default function ConfirmationSection({
 
         {/* Right Column: Settlement Overiview */}
         <div className="lg:col-span-5">
-          <div className="sticky top-32 bg-white dark:bg-[#111] -[2.5rem] p-10 border border-black/[0.03] dark:border-white/[0.05] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.05)]">
+<div className="sticky top-32 bg-white dark:bg-[#111] rounded-[2.5rem] p-10 border border-black/[0.03] dark:border-white/[0.05] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.05)]">
             <div className="flex items-center justify-between mb-8">
                <h3 className="text-lg font-serif italic">Settlement</h3>
                <Sparkles className="w-4 h-4 text-primary/40" />

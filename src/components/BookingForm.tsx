@@ -126,10 +126,10 @@ export default function BookingForm() {
               {t.bookingForm.adults}
             </label>
             <Select value={adults} onValueChange={setAdults}>
-              <SelectTrigger className="h-auto py-4 -none border-x-0 border-t-0 border-b border-black/10 focus:ring-0 bg-transparent text-lg font-light group-hover:border-[#D4AF37] transition-all">
+<SelectTrigger className="h-auto w-full py-4 rounded-none border-x-0 border-t-0 border-b border-black/10 focus:ring-0 bg-transparent text-lg font-light group-hover:border-[#D4AF37] transition-all">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent className="-none border-none shadow-xl">
+              <SelectContent className="rounded-none border-none shadow-xl">
                 {[1, 2, 3, 4, 5].map((num) => (
                   <SelectItem key={num} value={num.toString()} className="focus:bg-[#FAF9F6] py-3">
                     {num} {num === 1 ? t.bookingForm.adult : t.bookingForm.adults}
@@ -144,10 +144,10 @@ export default function BookingForm() {
               {t.bookingForm.children}
             </label>
             <Select value={children} onValueChange={setChildren}>
-              <SelectTrigger className="h-auto py-4 -none border-x-0 border-t-0 border-b border-black/10 focus:ring-0 bg-transparent text-lg font-light group-hover:border-[#D4AF37] transition-all">
+<SelectTrigger className="h-auto w-full py-4 rounded-none border-x-0 border-t-0 border-b border-black/10 focus:ring-0 bg-transparent text-lg font-light group-hover:border-[#D4AF37] transition-all">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent className="-none border-none shadow-xl">
+              <SelectContent className="rounded-none border-none shadow-xl">
                 {[0, 1, 2, 3, 4].map((num) => (
                   <SelectItem key={num} value={num.toString()} className="focus:bg-[#FAF9F6] py-3">
                     {num} {num === 1 ? t.bookingForm.child : t.bookingForm.children}
@@ -159,11 +159,11 @@ export default function BookingForm() {
         </div>
       </div>
       
-      <Button 
+<Button 
         type="submit" 
         disabled={status === "loading"}
         className={cn(
-          "w-full h-16 -none uppercase tracking-[0.3em] text-[11px] font-bold transition-all duration-700",
+          "w-full h-16 rounded-none uppercase tracking-[0.3em] text-[11px] font-bold transition-all duration-700",
           status === "success" 
             ? "bg-green-600 text-white" 
             : "bg-[#111] dark:bg-white dark:text-black text-white hover:bg-[#D4AF37] dark:hover:bg-[#D4AF37] dark:hover:text-white"

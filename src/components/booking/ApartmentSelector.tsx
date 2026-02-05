@@ -20,8 +20,8 @@ export default function ApartmentSelector({
       {apartments.map((apartment) => (
         <div 
           key={apartment.id}
-          className={cn(
-            "border -xl overflow-hidden transition-all flex flex-col md:flex-row",
+className={cn(
+            "border rounded-xl overflow-hidden transition-all flex flex-col md:flex-row",
             selectedApartment?.id === apartment.id 
               ? "border-primary shadow-md" 
               : "border-border hover:border-primary/50"
@@ -38,14 +38,14 @@ export default function ApartmentSelector({
             <div className="flex-1">
               <h3 className="text-lg font-semibold mb-2">{apartment.name}</h3>
               <p className="text-muted-foreground mb-4">{apartment.description}</p>
-              <div className="flex flex-wrap gap-2 mb-4">
-                <div className="text-sm bg-muted px-3 py-1 -full">
+<div className="flex flex-wrap gap-2 mb-4">
+                <div className="text-sm bg-muted px-3 py-1 rounded-full">
                   {apartment.capacity} Guests
                 </div>
-                <div className="text-sm bg-muted px-3 py-1 -full">
+                <div className="text-sm bg-muted px-3 py-1 rounded-full">
                   {apartment.size} m²
                 </div>
-                <div className="text-sm bg-muted px-3 py-1 -full">
+                <div className="text-sm bg-muted px-3 py-1 rounded-full">
                   {apartment.location}
                 </div>
               </div>

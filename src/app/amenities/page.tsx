@@ -18,21 +18,11 @@ export default function Amenities() {
   }, []);
   
   return (
-    <div className="min-h-screen  flex flex-col">
+    <div className="min-h-screen">
       
       <main className="flex-1">
         <AmenitiesHero />
-        
-        {/* Description Section */}
-        <section className="py-16 ">
-          <div className="">
-            <div className="max-w-3xl mx-auto text-center">
-              <p className="text-lg text-muted-foreground">
-                {t.amenitiesPage.description}
-              </p>
-            </div>
-          </div>
-        </section>
+       
         
         <RoomAmenities />
         

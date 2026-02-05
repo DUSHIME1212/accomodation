@@ -1,56 +1,95 @@
 "use client";
-import { useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Home } from "lucide-react";
+import { useEffect, useRef } from "react";
 import { useLanguage } from "@/components/LanguageContext";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import gsap from "gsap";
+import { ArrowLeft } from "lucide-react";
 
 const NotFound = () => {
   const { t } = useLanguage();
   const location = usePathname();
+  const containerRef = useRef(null);
 
   useEffect(() => {
-    console.error(
-      "404 Error: User attempted to access non-existent route:",
-      location
-    );
-  }, [location]);
+    const ctx = gsap.context(() => {
+      // Gentle floating animation for the entire content block
+      gsap.to(".floating-content", {
+        y: -20,
+        duration: 3,
+        repeat: -1,
+        yoyo: true,
+        ease: "power1.inOut"
+      });
+
+      // Staggered reveal
+      gsap.from(".reveal", {
+        y: 40,
+        opacity: 0,
+        stagger: 0.2,
+        duration: 1.5,
+        ease: "power4.out"
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-background">
-      <div className="glass-card p-10 max-w-md text-center animate-fade-in">
-        <h1 className="text-9xl font-bold text-primary mb-4">404</h1>
-        <h2 className="text-2xl font-semibold mb-4">{t.notFound.title}</h2>
-        <p className="text-muted-foreground mb-8">
-          {t.notFound.description}
+    <div 
+      ref={containerRef}
+      className="min-h-screen flex items-center justify-center bg-[#FAF9F6] dark:bg-[#080808] overflow-hidden px-6"
+    >
+      {/* --- BACKGROUND DECOR --- */}
+      {/* Large, Faded "404" acting as a watermark */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
+        <h1 className="text-[30vw] font-serif italic text-black/[0.02] dark:text-white/[0.02] leading-none">
+          404
+        </h1>
+      </div>
+
+      {/* --- MAIN CONTENT --- */}
+      <div className="floating-content relative z-10 max-w-2xl w-full text-center">
+        
+        {/* Aesthetic Marker */}
+        <div className="reveal flex flex-col items-center gap-4 mb-12">
+          <span className="text-[10px] uppercase tracking-[0.6em] text-primary/60 font-bold italic">
+            Unexpected Journey
+          </span>
+          <div className="w-px h-16 bg-gradient-to-b from-primary/40 to-transparent" />
+        </div>
+
+        {/* Title: Sophisticated Serif */}
+        <h2 className="reveal text-5xl md:text-7xl font-serif italic tracking-tighter text-foreground leading-tight mb-8">
+          A moment <br /> 
+          <span className="text-muted-foreground/40 font-light">out of time.</span>
+        </h2>
+
+        {/* Description: Wide spacing, light weight */}
+        <p className="reveal text-muted-foreground/70 text-xs md:text-sm uppercase tracking-[0.3em] font-light max-w-md mx-auto mb-16 leading-relaxed">
+          {t.notFound.description || "The path you seek has drifted into the horizon. Let us guide you back to your sanctuary."}
         </p>
-        <Button asChild className="btn-primary">
-          <Link href="/">
-            <Home className="mr-2 h-5 w-5" />
-            {t.notFound.returnHome}
+
+        {/* Action: The Luxury Back-Link */}
+        <div className="reveal flex justify-center">
+          <Link 
+            href="/" 
+            className="group relative flex flex-col items-center gap-6"
+          >
+            <div className="w-16 h-16 rounded-full border border-black/10 dark:border-white/10 flex items-center justify-center group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition-all duration-700">
+              <ArrowLeft className="w-5 h-5 stroke-[1.25px]" />
+            </div>
+            <span className="text-[10px] uppercase tracking-[0.4em] font-black text-muted-foreground group-hover:text-foreground transition-colors">
+              {t.notFound.returnHome}
+            </span>
           </Link>
-        </Button>
+        </div>
       </div>
-      
-      {/* Decorative waves */}
-      <div className="fixed bottom-0 left-0 right-0 h-24 overflow-hidden z-0">
-        <svg 
-          className="absolute bottom-0 w-full h-24 fill-primary/10"
-          preserveAspectRatio="none"
-          viewBox="0 0 1440 74"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path 
-            d="M0,37.1L40,34.5C80,32,160,27,240,29.6C320,32,400,42,480,42.9C560,44,640,35,720,32.1C800,30,880,34,960,40.8C1040,47,1120,56,1200,56.6C1280,57,1360,48,1400,43.3L1440,39.1L1440,74L1400,74C1360,74,1280,74,1200,74C1120,74,1040,74,960,74C880,74,800,74,720,74C640,74,560,74,480,74C400,74,320,74,240,74C160,74,80,74,40,74L0,74Z"
-            className="animate-wave opacity-50"
-          />
-          <path 
-            d="M0,37.1L40,34.5C80,32,160,27,240,29.6C320,32,400,42,480,42.9C560,44,640,35,720,32.1C800,30,880,34,960,40.8C1040,47,1120,56,1200,56.6C1280,57,1360,48,1400,43.3L1440,39.1L1440,74L1400,74C1360,74,1280,74,1200,74C1120,74,1040,74,960,74C880,74,800,74,720,74C640,74,560,74,480,74C400,74,320,74,240,74C160,74,80,74,40,74L0,74Z"
-            className="animate-wave opacity-100 [animation-delay:-4s]"
-          />
-        </svg>
-      </div>
+
+      {/* --- AMBIENT DECOR --- */}
+      {/* Abstract drifting circles */}
+      <div className="absolute top-[-10%] left-[-5%] w-96 h-96 bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[-10%] right-[-5%] w-96 h-96 bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
     </div>
   );
 };

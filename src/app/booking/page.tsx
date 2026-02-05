@@ -91,8 +91,8 @@ export default function BookingPage() {
               </div>
 
               <div className="flex justify-end pt-12">
-                <Button 
-                  className="group h-16 px-10 -full bg-primary text-white shadow-2xl shadow-primary/20 hover:scale-105 transition-all duration-500"
+<Button 
+                  className="group h-16 px-10 rounded-full bg-primary text-white shadow-2xl shadow-primary/20 hover:scale-105 transition-all duration-500"
                   disabled={!selectedApartment}
                   onClick={handleNext}
                 >
@@ -121,8 +121,8 @@ export default function BookingPage() {
                   <Button variant="ghost" onClick={handleBack} className="text-[10px] uppercase tracking-widest font-bold opacity-50 hover:opacity-100">
                     <ArrowLeft className="mr-2 h-3 w-3" /> Go Back
                   </Button>
-                  <Button 
-                    className="h-16 px-10 -full bg-primary text-white shadow-xl shadow-primary/20"
+<Button 
+                    className="h-16 px-10 rounded-full bg-primary text-white shadow-xl shadow-primary/20"
                     onClick={handleNext}
                   >
                     <span className="text-[11px] uppercase tracking-[0.3em] font-bold">Review Itinerary</span>
