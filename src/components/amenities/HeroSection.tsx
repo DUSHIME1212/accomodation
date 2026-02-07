@@ -47,7 +47,7 @@ export default function AmenitiesHero() {
         />
         {/* Advanced Gradient: From bottom and left to create a "Stage" for text */}
         <div className="absolute inset-0 bg-gradient-to-tr from-black via-primary/40 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#FAF9F6] dark:to-[#080808] opacity-100 h-32 bottom-0" />
+        {/* <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#FAF9F6] dark:to-[#080808] opacity-100 h-32 bottom-0" /> */}
       </div>
 
       <div className="relative z-10 w-full px-8 md:px-16 lg:px-24 xl:px-32">
