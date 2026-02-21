@@ -39,17 +39,25 @@ model UserPreferences {
 }
 
 model Apartment {
-  id          String   @id @default(cuid())
-  name        String
-  description String
-  price       Float
-  capacity    Int
-  size        Int
-  image       String
-  location    String
-  features    String[]
-  bookings    Booking[]
-  isActive    Boolean  @default(true)
+  id            String   @id @default(cuid())
+  sanityId      String   @unique
+  name          String
+  slug          String   @unique
+  description   String?
+  basePrice     Float
+  capacity      Int
+  size          Int?
+  image         String?
+  location      String?
+  features      String[]
+  isActive      Boolean  @default(true)
+  
+  // Booking constraints
+  minNights     Int      @default(1)
+  maxNights     Int      @default(30)
+  bookingBuffer Int      @default(0)
+  
+  bookings      Booking[]
 }
 model Booking {
   id                    String    @id @default(cuid())

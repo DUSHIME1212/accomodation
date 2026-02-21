@@ -106,15 +106,20 @@ export type UserPreferencesScalarFieldEnum = (typeof UserPreferencesScalarFieldE
 
 export const ApartmentScalarFieldEnum = {
   id: 'id',
+  sanityId: 'sanityId',
   name: 'name',
+  slug: 'slug',
   description: 'description',
-  price: 'price',
+  basePrice: 'basePrice',
   capacity: 'capacity',
   size: 'size',
   image: 'image',
   location: 'location',
   features: 'features',
-  isActive: 'isActive'
+  isActive: 'isActive',
+  minNights: 'minNights',
+  maxNights: 'maxNights',
+  bookingBuffer: 'bookingBuffer'
 } as const
 
 export type ApartmentScalarFieldEnum = (typeof ApartmentScalarFieldEnum)[keyof typeof ApartmentScalarFieldEnum]
