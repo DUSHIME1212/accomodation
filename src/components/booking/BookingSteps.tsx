@@ -10,11 +10,14 @@ interface BookingStepsProps {
   isConfirmed?: boolean; // New prop to trigger the "all green" state
 }
 
-export default function BookingSteps({ currentStep, isConfirmed = false }: BookingStepsProps) {
+export default function BookingSteps({
+  currentStep,
+  isConfirmed = false,
+}: BookingStepsProps) {
   const steps = [
     { number: 1, label: "Selection", subtitle: "Choose Room" },
     { number: 2, label: "Details", subtitle: "Guest Info" },
-    { number: 3, label: "Finalize", subtitle: "Confirmation" }
+    { number: 3, label: "Finalize", subtitle: "Confirmation" },
   ];
 
   const barRef = useRef<HTMLDivElement>(null);
@@ -23,7 +26,7 @@ export default function BookingSteps({ currentStep, isConfirmed = false }: Booki
   useEffect(() => {
     // If confirmed, progress bar is always 100%
     const progress = isConfirmed ? 1 : (currentStep - 1) / (steps.length - 1);
-    
+
     gsap.to(barRef.current, {
       width: `${progress * 100}%`,
       backgroundColor: isConfirmed ? "#10b981" : "currentColor", // Emerald green on finish
@@ -40,53 +43,52 @@ export default function BookingSteps({ currentStep, isConfirmed = false }: Booki
   }, [currentStep, isConfirmed]);
 
   return (
-    <div className="relative max-w-5xl mx-auto px-4 py-20">
+    <div className="relative mx-auto max-w-5xl px-4 py-20">
       {/* Background Track */}
-      <div className="absolute top-[6.75rem] left-[10%] right-[10%] h-[1px] bg-black/[0.08] dark:bg-white/[0.08] z-0" />
-      
+      <div className="absolute top-[6.75rem] right-[10%] left-[10%] z-0 h-[1px] bg-black/[0.08] dark:bg-white/[0.08]" />
       {/* Progress Line */}
-      <div className="absolute top-[6.75rem] left-[10%] right-[10%] z-0 pointer-events-none">
-        <div 
+      <div className="pointer-events-none absolute top-[6.75rem] right-[10%] left-[10%] z-0">
+        <div
           ref={barRef}
           className={cn(
             "h-[1.5px] w-0 transition-colors duration-1000",
-            isConfirmed ? "bg-emerald-500" : "bg-black dark:bg-white"
-          )} 
+            isConfirmed ? "bg-emerald-500" : "bg-foreground",
+          )}
         />
       </div>
-
-      {/* Overlapping Aesthetic Ring */}
-      {/* <div 
-        ref={ringRef}
-        className="absolute top-[4rem] w-24 h-24 border border-black/[0.05] dark:border-white/[0.05] rounded-full z-0 pointer-events-none -ml-12"
-        style={{ left: "0" }}
-      /> */}
-
-      <div className="flex justify-between items-start relative z-10 px-[5%]">
+      <div className="relative z-10 flex items-start justify-between px-[5%]">
         {steps.map((step) => {
           const isActive = currentStep === step.number;
           const isCompleted = currentStep > step.number || isConfirmed;
 
           return (
-            <div key={step.number} className="flex flex-col items-center w-32">
+            <div key={step.number} className="flex w-32 flex-col items-center">
               <div className="relative mb-8 flex items-center justify-center">
                 {/* Active/Success Pulse */}
                 {isActive && !isConfirmed && (
-                   <div className="absolute inset-[-12px] border border-black/[0.1] dark:border-white/[0.1] rounded-full animate-pulse" />
+                  <div className="border-foreground/10 absolute inset-[-12px] animate-pulse rounded-full border" />
                 )}
-                
-                <div className={cn(
-                  "w-16 h-16 rounded-full flex items-center justify-center transition-all duration-1000",
-                  isActive && !isConfirmed ? "border border-black/40 dark:border-white/40 bg-white dark:bg-black" : "border border-transparent",
-                  isCompleted ? "bg-emerald-500 scale-90 shadow-[0_10px_20px_rgba(16,185,129,0.2)]" : ""
-                )}>
+
+                <div
+                  className={cn(
+                    "flex h-16 w-16 items-center justify-center rounded-full transition-all duration-1000",
+                    isActive && !isConfirmed
+                      ? "border-foreground/40 bg-background border"
+                      : "border border-transparent",
+                    isCompleted
+                      ? "scale-90 bg-emerald-500 shadow-lg shadow-emerald-500/20"
+                      : "",
+                  )}
+                >
                   {isCompleted ? (
-                    <Check className="h-5 w-5 text-white stroke-[2.5px] animate-in zoom-in duration-500" />
+                    <Check className="animate-in zoom-in h-5 w-5 stroke-[2.5px] text-white duration-500" />
                   ) : (
-                    <span className={cn(
-                      "text-[11px] font-medium tracking-widest",
-                      isActive ? "text-black dark:text-white" : "text-black/10 dark:text-white/10"
-                    )}>
+                    <span
+                      className={cn(
+                        "text-[11px] font-medium tracking-widest",
+                        isActive ? "text-foreground" : "text-foreground/10",
+                      )}
+                    >
                       0{step.number}
                     </span>
                   )}
@@ -94,16 +96,28 @@ export default function BookingSteps({ currentStep, isConfirmed = false }: Booki
               </div>
 
               <div className="text-center">
-                <p className={cn(
-                  "text-[10px] uppercase tracking-[0.3em] font-bold mb-2 transition-colors duration-700",
-                  isConfirmed ? "text-emerald-600" : (isActive ? "text-black/80 dark:text-white/80" : "text-black/20 dark:text-white/20")
-                )}>
+                <p
+                  className={cn(
+                    "mb-2 text-[10px] font-bold tracking-[0.3em] uppercase transition-colors duration-700",
+                    isConfirmed
+                      ? "text-emerald-600"
+                      : isActive
+                        ? "text-foreground/80"
+                        : "text-foreground/20",
+                  )}
+                >
                   {isConfirmed ? "Verified" : step.label}
                 </p>
-                <p className={cn(
-                  "text-[13px] font-serif italic transition-opacity duration-700",
-                  isConfirmed ? "text-emerald-500/60" : (isActive ? "text-black/40 dark:text-white/40 opacity-100" : "opacity-0")
-                )}>
+                <p
+                  className={cn(
+                    "font-serif text-[13px] italic transition-opacity duration-700",
+                    isConfirmed
+                      ? "text-emerald-500/60"
+                      : isActive
+                        ? "text-muted-foreground opacity-100"
+                        : "opacity-0",
+                  )}
+                >
                   {isConfirmed ? "Reservation Secured" : step.subtitle}
                 </p>
               </div>

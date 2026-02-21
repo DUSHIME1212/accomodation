@@ -35,9 +35,14 @@ export default function BookingForm() {
 
     // Luxury delay to simulate "bespoke searching"
     setTimeout(() => {
-      console.log("Booking submitted:", { startDate, endDate, adults, children });
+      console.log("Booking submitted:", {
+        startDate,
+        endDate,
+        adults,
+        children,
+      });
       setStatus("success");
-      
+
       setTimeout(() => {
         setStatus("idle");
       }, 3000);
@@ -45,112 +50,142 @@ export default function BookingForm() {
   };
 
   return (
-    <form 
+    <form
       ref={formRef}
-      onSubmit={handleSubmit} 
-      className="relative bg-white dark:bg-[#111] p-8 md:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.1)] space-y-10 border border-black/5"
+      onSubmit={handleSubmit}
+      className="bg-background border-border relative space-y-10 border p-8 shadow-[0_20px_50px_rgba(0,0,0,0.1)] md:p-12"
     >
       <div className="space-y-2 text-center">
-        <h3 className="text-3xl font-serif italic text-[#111] dark:text-white">
+        <h3 className="text-foreground font-serif text-3xl italic">
           {t.bookingForm.title}
         </h3>
-        <p className="text-[10px] uppercase tracking-[0.3em] text-gray-400 font-bold">
+        <p className="text-muted-foreground text-[10px] font-bold tracking-[0.3em] uppercase">
           Bespoke Reservation Service
         </p>
       </div>
-      
+
       <div className="grid grid-cols-1 gap-10">
         {/* Date Selection Row */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="group space-y-2 relative">
-            <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold ml-1">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+          <div className="group relative space-y-2">
+            <label className="text-muted-foreground ml-1 text-[10px] font-bold tracking-widest uppercase">
               {t.bookingForm.checkIn}
             </label>
             <Popover>
               <PopoverTrigger asChild>
                 <button
                   type="button"
-                  className="w-full flex items-center justify-between py-4 border-b border-black/10 group-hover:border-[#D4AF37] transition-colors duration-500 text-left"
+                  className="border-border group-hover:border-primary flex w-full items-center justify-between border-b py-4 text-left transition-colors duration-500"
                 >
-                  <span className={cn("text-lg font-light", !startDate && "text-gray-300")}>
-                    {startDate ? format(startDate, "dd MMM yyyy") : t.bookingForm.selectDate}
+                  <span
+                    className={cn(
+                      "text-foreground text-lg font-light",
+                      !startDate && "text-muted-foreground/30",
+                    )}
+                  >
+                    {startDate
+                      ? format(startDate, "dd MMM yyyy")
+                      : t.bookingForm.selectDate}
                   </span>
-                  <CalendarIcon className="h-4 w-4 text-gray-400" />
+                  <CalendarIcon className="text-muted-foreground/40 h-4 w-4" />
                 </button>
               </PopoverTrigger>
-              <PopoverContent className="w-auto p-0 border-none shadow-2xl" align="start">
+              <PopoverContent
+                className="w-auto border-none p-0 shadow-2xl"
+                align="start"
+              >
                 <Calendar
                   mode="single"
                   selected={startDate}
                   onSelect={setStartDate}
                   disabled={(date) => date < new Date()}
-                  className="bg-white dark:bg-black p-4"
+                  className="bg-background border-border border p-4"
                 />
               </PopoverContent>
             </Popover>
           </div>
 
-          <div className="group space-y-2 relative">
-            <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold ml-1">
+          <div className="group relative space-y-2">
+            <label className="text-muted-foreground ml-1 text-[10px] font-bold tracking-widest uppercase">
               {t.bookingForm.checkOut}
             </label>
             <Popover>
               <PopoverTrigger asChild>
                 <button
                   type="button"
-                  className="w-full flex items-center justify-between py-4 border-b border-black/10 group-hover:border-[#D4AF37] transition-colors duration-500 text-left"
+                  className="border-border group-hover:border-primary flex w-full items-center justify-between border-b py-4 text-left transition-colors duration-500"
                 >
-                  <span className={cn("text-lg font-light", !endDate && "text-gray-300")}>
-                    {endDate ? format(endDate, "dd MMM yyyy") : t.bookingForm.selectDate}
+                  <span
+                    className={cn(
+                      "text-foreground text-lg font-light",
+                      !endDate && "text-muted-foreground/30",
+                    )}
+                  >
+                    {endDate
+                      ? format(endDate, "dd MMM yyyy")
+                      : t.bookingForm.selectDate}
                   </span>
-                  <CalendarIcon className="h-4 w-4 text-gray-400" />
+                  <CalendarIcon className="text-muted-foreground/40 h-4 w-4" />
                 </button>
               </PopoverTrigger>
-              <PopoverContent className="w-auto p-0 border-none shadow-2xl" align="start">
+              <PopoverContent
+                className="w-auto border-none p-0 shadow-2xl"
+                align="start"
+              >
                 <Calendar
                   mode="single"
                   selected={endDate}
                   onSelect={setEndDate}
                   disabled={(date) => date < (startDate ?? new Date())}
-                  className="bg-white dark:bg-black p-4"
+                  className="bg-background border-border border p-4"
                 />
               </PopoverContent>
             </Popover>
           </div>
         </div>
-        
+
         {/* Guests Selection Row */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="space-y-2 group">
-            <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold ml-1">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+          <div className="group space-y-2">
+            <label className="text-muted-foreground ml-1 text-[10px] font-bold tracking-widest uppercase">
               {t.bookingForm.adults}
             </label>
             <Select value={adults} onValueChange={setAdults}>
-<SelectTrigger className="h-auto w-full py-4 rounded-none border-x-0 border-t-0 border-b border-black/10 focus:ring-0 bg-transparent text-lg font-light group-hover:border-[#D4AF37] transition-all">
+              <SelectTrigger className="border-border group-hover:border-primary text-foreground h-auto w-full rounded-none border-x-0 border-t-0 border-b bg-transparent py-4 text-lg font-light transition-all focus:ring-0">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent className="rounded-none border-none shadow-xl">
+              <SelectContent className="border-border bg-background rounded-none shadow-xl">
                 {[1, 2, 3, 4, 5].map((num) => (
-                  <SelectItem key={num} value={num.toString()} className="focus:bg-[#FAF9F6] py-3">
-                    {num} {num === 1 ? t.bookingForm.adult : t.bookingForm.adults}
+                  <SelectItem
+                    key={num}
+                    value={num.toString()}
+                    className="focus:bg-secondary/20 py-3"
+                  >
+                    {num}{" "}
+                    {num === 1 ? t.bookingForm.adult : t.bookingForm.adults}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
           </div>
-          
-          <div className="space-y-2 group">
-            <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold ml-1">
+
+          <div className="group space-y-2">
+            <label className="text-muted-foreground ml-1 text-[10px] font-bold tracking-widest uppercase">
               {t.bookingForm.children}
             </label>
             <Select value={children} onValueChange={setChildren}>
-<SelectTrigger className="h-auto w-full py-4 rounded-none border-x-0 border-t-0 border-b border-black/10 focus:ring-0 bg-transparent text-lg font-light group-hover:border-[#D4AF37] transition-all">
+              <SelectTrigger className="border-border group-hover:border-primary text-foreground h-auto w-full rounded-none border-x-0 border-t-0 border-b bg-transparent py-4 text-lg font-light transition-all focus:ring-0">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent className="rounded-none border-none shadow-xl">
+              <SelectContent className="border-border bg-background rounded-none shadow-xl">
                 {[0, 1, 2, 3, 4].map((num) => (
-                  <SelectItem key={num} value={num.toString()} className="focus:bg-[#FAF9F6] py-3">
-                    {num} {num === 1 ? t.bookingForm.child : t.bookingForm.children}
+                  <SelectItem
+                    key={num}
+                    value={num.toString()}
+                    className="focus:bg-secondary/20 py-3"
+                  >
+                    {num}{" "}
+                    {num === 1 ? t.bookingForm.child : t.bookingForm.children}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -158,15 +193,15 @@ export default function BookingForm() {
           </div>
         </div>
       </div>
-      
-<Button 
-        type="submit" 
+
+      <Button
+        type="submit"
         disabled={status === "loading"}
         className={cn(
-          "w-full h-16 rounded-none uppercase tracking-[0.3em] text-[11px] font-bold transition-all duration-700",
-          status === "success" 
-            ? "bg-green-600 text-white" 
-            : "bg-[#111] dark:bg-white dark:text-black text-white hover:bg-[#D4AF37] dark:hover:bg-[#D4AF37] dark:hover:text-white"
+          "h-16 w-full rounded-none text-[11px] font-bold tracking-[0.3em] uppercase transition-all duration-700",
+          status === "success"
+            ? "bg-green-600 text-white"
+            : "bg-foreground text-background hover:bg-primary hover:text-white",
         )}
       >
         {status === "loading" ? (
@@ -184,7 +219,7 @@ export default function BookingForm() {
         )}
       </Button>
 
-      <p className="text-center text-[9px] text-gray-400 uppercase tracking-widest">
+      <p className="text-muted-foreground/60 text-center text-[9px] tracking-widest uppercase">
         Best Price Guaranteed for Direct Reservations
       </p>
     </form>
