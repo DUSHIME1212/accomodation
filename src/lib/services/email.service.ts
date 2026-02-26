@@ -1,11 +1,11 @@
 // lib/services/email.service.ts
 // Email service for booking notifications
 
-import { Booking, Apartment } from '@prisma/client'
+import type { Booking, Apartment } from "@/generated/prisma/client";
 
 type BookingWithApartment = Booking & {
-  apartment: Apartment
-}
+  apartment: Apartment;
+};
 
 export class EmailService {
   /**
@@ -13,20 +13,20 @@ export class EmailService {
    */
   static async sendBookingConfirmation(booking: BookingWithApartment) {
     const emailData = {
-      to: booking.email,
+      to: booking.guestEmail,
       subject: `Booking Confirmation - ${booking.apartment.name}`,
       templateData: {
-        guestName: `${booking.firstName} ${booking.lastName}`,
+        guestName: `${booking.guestFirstName} ${booking.guestLastName}`,
         apartmentName: booking.apartment.name,
-        bookingReference: booking.bookingReference,
-        checkIn: booking.checkIn.toLocaleDateString(),
-        checkOut: booking.checkOut.toLocaleDateString(),
-        nights: booking.nights,
-        totalPrice: booking.totalPrice.toNumber(),
+        bookingReference: booking.confirmationNumber,
+        checkIn: booking.checkInDate.toLocaleDateString(),
+        checkOut: booking.checkOutDate.toLocaleDateString(),
+        nights: booking.numberOfNights,
+        totalPrice: booking.totalPrice,
         adults: booking.adults,
         children: booking.children,
       },
-    }
+    };
 
     // TODO: Implement actual email sending
     // Examples:
@@ -36,7 +36,7 @@ export class EmailService {
     // - Postmark
     // - Resend
 
-    console.log('Sending booking confirmation email:', emailData)
+    console.log("Sending booking confirmation email:", emailData);
 
     // Example with Resend (modern choice):
     // const resend = new Resend(process.env.RESEND_API_KEY)
@@ -47,7 +47,7 @@ export class EmailService {
     //   react: BookingConfirmationEmail(emailData.templateData),
     // })
 
-    return emailData
+    return emailData;
   }
 
   /**
@@ -55,19 +55,19 @@ export class EmailService {
    */
   static async sendBookingCancellation(booking: BookingWithApartment) {
     const emailData = {
-      to: booking.email,
-      subject: `Booking Cancelled - ${booking.bookingReference}`,
+      to: booking.guestEmail,
+      subject: `Booking Cancelled - ${booking.confirmationNumber}`,
       templateData: {
-        guestName: `${booking.firstName} ${booking.lastName}`,
+        guestName: `${booking.guestFirstName} ${booking.guestLastName}`,
         apartmentName: booking.apartment.name,
-        bookingReference: booking.bookingReference,
+        bookingReference: booking.confirmationNumber,
         cancellationReason: booking.cancellationReason,
       },
-    }
+    };
 
-    console.log('Sending cancellation email:', emailData)
+    console.log("Sending cancellation email:", emailData);
 
-    return emailData
+    return emailData;
   }
 
   /**
@@ -75,19 +75,19 @@ export class EmailService {
    */
   static async sendCheckInReminder(booking: BookingWithApartment) {
     const emailData = {
-      to: booking.email,
+      to: booking.guestEmail,
       subject: `Check-in Tomorrow - ${booking.apartment.name}`,
       templateData: {
-        guestName: `${booking.firstName} ${booking.lastName}`,
+        guestName: `${booking.guestFirstName} ${booking.guestLastName}`,
         apartmentName: booking.apartment.name,
-        checkIn: booking.checkIn.toLocaleDateString(),
-        bookingReference: booking.bookingReference,
+        checkIn: booking.checkInDate.toLocaleDateString(),
+        bookingReference: booking.confirmationNumber,
       },
-    }
+    };
 
-    console.log('Sending check-in reminder:', emailData)
+    console.log("Sending check-in reminder:", emailData);
 
-    return emailData
+    return emailData;
   }
 
   /**
@@ -95,20 +95,20 @@ export class EmailService {
    */
   static async sendAdminNotification(booking: BookingWithApartment) {
     const emailData = {
-      to: process.env.ADMIN_EMAIL || 'admin@yourdomain.com',
-      subject: `New Booking - ${booking.bookingReference}`,
+      to: process.env.ADMIN_EMAIL || "admin@yourdomain.com",
+      subject: `New Booking - ${booking.confirmationNumber}`,
       templateData: {
-        bookingReference: booking.bookingReference,
-        guestName: `${booking.firstName} ${booking.lastName}`,
+        bookingReference: booking.confirmationNumber,
+        guestName: `${booking.guestFirstName} ${booking.guestLastName}`,
         apartmentName: booking.apartment.name,
-        checkIn: booking.checkIn.toLocaleDateString(),
-        checkOut: booking.checkOut.toLocaleDateString(),
-        totalPrice: booking.totalPrice.toNumber(),
+        checkIn: booking.checkInDate.toLocaleDateString(),
+        checkOut: booking.checkOutDate.toLocaleDateString(),
+        totalPrice: booking.totalPrice,
       },
-    }
+    };
 
-    console.log('Sending admin notification:', emailData)
+    console.log("Sending admin notification:", emailData);
 
-    return emailData
+    return emailData;
   }
 }

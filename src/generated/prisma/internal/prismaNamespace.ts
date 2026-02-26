@@ -387,6 +387,7 @@ export const ModelName = {
   User: 'User',
   UserPreferences: 'UserPreferences',
   Apartment: 'Apartment',
+  ApartmentAvailability: 'ApartmentAvailability',
   Booking: 'Booking'
 } as const
 
@@ -403,7 +404,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "userPreferences" | "apartment" | "booking"
+    modelProps: "user" | "userPreferences" | "apartment" | "apartmentAvailability" | "booking"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -629,6 +630,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ApartmentAvailability: {
+      payload: Prisma.$ApartmentAvailabilityPayload<ExtArgs>
+      fields: Prisma.ApartmentAvailabilityFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ApartmentAvailabilityFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApartmentAvailabilityPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ApartmentAvailabilityFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApartmentAvailabilityPayload>
+        }
+        findFirst: {
+          args: Prisma.ApartmentAvailabilityFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApartmentAvailabilityPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ApartmentAvailabilityFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApartmentAvailabilityPayload>
+        }
+        findMany: {
+          args: Prisma.ApartmentAvailabilityFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApartmentAvailabilityPayload>[]
+        }
+        create: {
+          args: Prisma.ApartmentAvailabilityCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApartmentAvailabilityPayload>
+        }
+        createMany: {
+          args: Prisma.ApartmentAvailabilityCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ApartmentAvailabilityCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApartmentAvailabilityPayload>[]
+        }
+        delete: {
+          args: Prisma.ApartmentAvailabilityDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApartmentAvailabilityPayload>
+        }
+        update: {
+          args: Prisma.ApartmentAvailabilityUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApartmentAvailabilityPayload>
+        }
+        deleteMany: {
+          args: Prisma.ApartmentAvailabilityDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ApartmentAvailabilityUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ApartmentAvailabilityUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApartmentAvailabilityPayload>[]
+        }
+        upsert: {
+          args: Prisma.ApartmentAvailabilityUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApartmentAvailabilityPayload>
+        }
+        aggregate: {
+          args: Prisma.ApartmentAvailabilityAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateApartmentAvailability>
+        }
+        groupBy: {
+          args: Prisma.ApartmentAvailabilityGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ApartmentAvailabilityGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ApartmentAvailabilityCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ApartmentAvailabilityCountAggregateOutputType> | number
+        }
+      }
+    }
     Booking: {
       payload: Prisma.$BookingPayload<ExtArgs>
       fields: Prisma.BookingFieldRefs
@@ -792,6 +867,20 @@ export const ApartmentScalarFieldEnum = {
 } as const
 
 export type ApartmentScalarFieldEnum = (typeof ApartmentScalarFieldEnum)[keyof typeof ApartmentScalarFieldEnum]
+
+
+export const ApartmentAvailabilityScalarFieldEnum = {
+  id: 'id',
+  apartmentId: 'apartmentId',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  type: 'type',
+  reason: 'reason',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ApartmentAvailabilityScalarFieldEnum = (typeof ApartmentAvailabilityScalarFieldEnum)[keyof typeof ApartmentAvailabilityScalarFieldEnum]
 
 
 export const BookingScalarFieldEnum = {
@@ -1071,6 +1160,7 @@ export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   userPreferences?: Prisma.UserPreferencesOmit
   apartment?: Prisma.ApartmentOmit
+  apartmentAvailability?: Prisma.ApartmentAvailabilityOmit
   booking?: Prisma.BookingOmit
 }
 

@@ -91,7 +91,7 @@ export default function Hero({ t }: { t: any }) {
           alt="Luxury Interior"
         />
         {/* Floating Stat/Detail */}
-        <div className="border-border bg-background/10 absolute right-12 bottom-12 z-30 hidden border p-6 backdrop-blur-md md:block">
+        <div className="border-border bg-background absolute right-12 bottom-12 z-30 hidden border p-6 backdrop-blur-md md:block">
           <p className="text-foreground/60 mb-1 text-[9px] tracking-[0.4em] uppercase">
             Location
           </p>

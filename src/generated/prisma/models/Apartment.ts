@@ -313,6 +313,7 @@ export type ApartmentWhereInput = {
   maxNights?: Prisma.IntFilter<"Apartment"> | number
   bookingBuffer?: Prisma.IntFilter<"Apartment"> | number
   bookings?: Prisma.BookingListRelationFilter
+  availability?: Prisma.ApartmentAvailabilityListRelationFilter
 }
 
 export type ApartmentOrderByWithRelationInput = {
@@ -332,6 +333,7 @@ export type ApartmentOrderByWithRelationInput = {
   maxNights?: Prisma.SortOrder
   bookingBuffer?: Prisma.SortOrder
   bookings?: Prisma.BookingOrderByRelationAggregateInput
+  availability?: Prisma.ApartmentAvailabilityOrderByRelationAggregateInput
 }
 
 export type ApartmentWhereUniqueInput = Prisma.AtLeast<{
@@ -354,6 +356,7 @@ export type ApartmentWhereUniqueInput = Prisma.AtLeast<{
   maxNights?: Prisma.IntFilter<"Apartment"> | number
   bookingBuffer?: Prisma.IntFilter<"Apartment"> | number
   bookings?: Prisma.BookingListRelationFilter
+  availability?: Prisma.ApartmentAvailabilityListRelationFilter
 }, "id" | "sanityId" | "slug">
 
 export type ApartmentOrderByWithAggregationInput = {
@@ -417,6 +420,7 @@ export type ApartmentCreateInput = {
   maxNights?: number
   bookingBuffer?: number
   bookings?: Prisma.BookingCreateNestedManyWithoutApartmentInput
+  availability?: Prisma.ApartmentAvailabilityCreateNestedManyWithoutApartmentInput
 }
 
 export type ApartmentUncheckedCreateInput = {
@@ -436,6 +440,7 @@ export type ApartmentUncheckedCreateInput = {
   maxNights?: number
   bookingBuffer?: number
   bookings?: Prisma.BookingUncheckedCreateNestedManyWithoutApartmentInput
+  availability?: Prisma.ApartmentAvailabilityUncheckedCreateNestedManyWithoutApartmentInput
 }
 
 export type ApartmentUpdateInput = {
@@ -455,6 +460,7 @@ export type ApartmentUpdateInput = {
   maxNights?: Prisma.IntFieldUpdateOperationsInput | number
   bookingBuffer?: Prisma.IntFieldUpdateOperationsInput | number
   bookings?: Prisma.BookingUpdateManyWithoutApartmentNestedInput
+  availability?: Prisma.ApartmentAvailabilityUpdateManyWithoutApartmentNestedInput
 }
 
 export type ApartmentUncheckedUpdateInput = {
@@ -474,6 +480,7 @@ export type ApartmentUncheckedUpdateInput = {
   maxNights?: Prisma.IntFieldUpdateOperationsInput | number
   bookingBuffer?: Prisma.IntFieldUpdateOperationsInput | number
   bookings?: Prisma.BookingUncheckedUpdateManyWithoutApartmentNestedInput
+  availability?: Prisma.ApartmentAvailabilityUncheckedUpdateManyWithoutApartmentNestedInput
 }
 
 export type ApartmentCreateManyInput = {
@@ -646,6 +653,20 @@ export type ApartmentUpdatefeaturesInput = {
   push?: string | string[]
 }
 
+export type ApartmentCreateNestedOneWithoutAvailabilityInput = {
+  create?: Prisma.XOR<Prisma.ApartmentCreateWithoutAvailabilityInput, Prisma.ApartmentUncheckedCreateWithoutAvailabilityInput>
+  connectOrCreate?: Prisma.ApartmentCreateOrConnectWithoutAvailabilityInput
+  connect?: Prisma.ApartmentWhereUniqueInput
+}
+
+export type ApartmentUpdateOneRequiredWithoutAvailabilityNestedInput = {
+  create?: Prisma.XOR<Prisma.ApartmentCreateWithoutAvailabilityInput, Prisma.ApartmentUncheckedCreateWithoutAvailabilityInput>
+  connectOrCreate?: Prisma.ApartmentCreateOrConnectWithoutAvailabilityInput
+  upsert?: Prisma.ApartmentUpsertWithoutAvailabilityInput
+  connect?: Prisma.ApartmentWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ApartmentUpdateToOneWithWhereWithoutAvailabilityInput, Prisma.ApartmentUpdateWithoutAvailabilityInput>, Prisma.ApartmentUncheckedUpdateWithoutAvailabilityInput>
+}
+
 export type ApartmentCreateNestedOneWithoutBookingsInput = {
   create?: Prisma.XOR<Prisma.ApartmentCreateWithoutBookingsInput, Prisma.ApartmentUncheckedCreateWithoutBookingsInput>
   connectOrCreate?: Prisma.ApartmentCreateOrConnectWithoutBookingsInput
@@ -658,6 +679,98 @@ export type ApartmentUpdateOneRequiredWithoutBookingsNestedInput = {
   upsert?: Prisma.ApartmentUpsertWithoutBookingsInput
   connect?: Prisma.ApartmentWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.ApartmentUpdateToOneWithWhereWithoutBookingsInput, Prisma.ApartmentUpdateWithoutBookingsInput>, Prisma.ApartmentUncheckedUpdateWithoutBookingsInput>
+}
+
+export type ApartmentCreateWithoutAvailabilityInput = {
+  id?: string
+  sanityId: string
+  name: string
+  slug: string
+  description?: string | null
+  basePrice: number
+  capacity: number
+  size?: number | null
+  image?: string | null
+  location?: string | null
+  features?: Prisma.ApartmentCreatefeaturesInput | string[]
+  isActive?: boolean
+  minNights?: number
+  maxNights?: number
+  bookingBuffer?: number
+  bookings?: Prisma.BookingCreateNestedManyWithoutApartmentInput
+}
+
+export type ApartmentUncheckedCreateWithoutAvailabilityInput = {
+  id?: string
+  sanityId: string
+  name: string
+  slug: string
+  description?: string | null
+  basePrice: number
+  capacity: number
+  size?: number | null
+  image?: string | null
+  location?: string | null
+  features?: Prisma.ApartmentCreatefeaturesInput | string[]
+  isActive?: boolean
+  minNights?: number
+  maxNights?: number
+  bookingBuffer?: number
+  bookings?: Prisma.BookingUncheckedCreateNestedManyWithoutApartmentInput
+}
+
+export type ApartmentCreateOrConnectWithoutAvailabilityInput = {
+  where: Prisma.ApartmentWhereUniqueInput
+  create: Prisma.XOR<Prisma.ApartmentCreateWithoutAvailabilityInput, Prisma.ApartmentUncheckedCreateWithoutAvailabilityInput>
+}
+
+export type ApartmentUpsertWithoutAvailabilityInput = {
+  update: Prisma.XOR<Prisma.ApartmentUpdateWithoutAvailabilityInput, Prisma.ApartmentUncheckedUpdateWithoutAvailabilityInput>
+  create: Prisma.XOR<Prisma.ApartmentCreateWithoutAvailabilityInput, Prisma.ApartmentUncheckedCreateWithoutAvailabilityInput>
+  where?: Prisma.ApartmentWhereInput
+}
+
+export type ApartmentUpdateToOneWithWhereWithoutAvailabilityInput = {
+  where?: Prisma.ApartmentWhereInput
+  data: Prisma.XOR<Prisma.ApartmentUpdateWithoutAvailabilityInput, Prisma.ApartmentUncheckedUpdateWithoutAvailabilityInput>
+}
+
+export type ApartmentUpdateWithoutAvailabilityInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  sanityId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  basePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  size?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  features?: Prisma.ApartmentUpdatefeaturesInput | string[]
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  minNights?: Prisma.IntFieldUpdateOperationsInput | number
+  maxNights?: Prisma.IntFieldUpdateOperationsInput | number
+  bookingBuffer?: Prisma.IntFieldUpdateOperationsInput | number
+  bookings?: Prisma.BookingUpdateManyWithoutApartmentNestedInput
+}
+
+export type ApartmentUncheckedUpdateWithoutAvailabilityInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  sanityId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  basePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  size?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  features?: Prisma.ApartmentUpdatefeaturesInput | string[]
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  minNights?: Prisma.IntFieldUpdateOperationsInput | number
+  maxNights?: Prisma.IntFieldUpdateOperationsInput | number
+  bookingBuffer?: Prisma.IntFieldUpdateOperationsInput | number
+  bookings?: Prisma.BookingUncheckedUpdateManyWithoutApartmentNestedInput
 }
 
 export type ApartmentCreateWithoutBookingsInput = {
@@ -676,6 +789,7 @@ export type ApartmentCreateWithoutBookingsInput = {
   minNights?: number
   maxNights?: number
   bookingBuffer?: number
+  availability?: Prisma.ApartmentAvailabilityCreateNestedManyWithoutApartmentInput
 }
 
 export type ApartmentUncheckedCreateWithoutBookingsInput = {
@@ -694,6 +808,7 @@ export type ApartmentUncheckedCreateWithoutBookingsInput = {
   minNights?: number
   maxNights?: number
   bookingBuffer?: number
+  availability?: Prisma.ApartmentAvailabilityUncheckedCreateNestedManyWithoutApartmentInput
 }
 
 export type ApartmentCreateOrConnectWithoutBookingsInput = {
@@ -728,6 +843,7 @@ export type ApartmentUpdateWithoutBookingsInput = {
   minNights?: Prisma.IntFieldUpdateOperationsInput | number
   maxNights?: Prisma.IntFieldUpdateOperationsInput | number
   bookingBuffer?: Prisma.IntFieldUpdateOperationsInput | number
+  availability?: Prisma.ApartmentAvailabilityUpdateManyWithoutApartmentNestedInput
 }
 
 export type ApartmentUncheckedUpdateWithoutBookingsInput = {
@@ -746,6 +862,7 @@ export type ApartmentUncheckedUpdateWithoutBookingsInput = {
   minNights?: Prisma.IntFieldUpdateOperationsInput | number
   maxNights?: Prisma.IntFieldUpdateOperationsInput | number
   bookingBuffer?: Prisma.IntFieldUpdateOperationsInput | number
+  availability?: Prisma.ApartmentAvailabilityUncheckedUpdateManyWithoutApartmentNestedInput
 }
 
 
@@ -755,10 +872,12 @@ export type ApartmentUncheckedUpdateWithoutBookingsInput = {
 
 export type ApartmentCountOutputType = {
   bookings: number
+  availability: number
 }
 
 export type ApartmentCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   bookings?: boolean | ApartmentCountOutputTypeCountBookingsArgs
+  availability?: boolean | ApartmentCountOutputTypeCountAvailabilityArgs
 }
 
 /**
@@ -776,6 +895,13 @@ export type ApartmentCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ex
  */
 export type ApartmentCountOutputTypeCountBookingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.BookingWhereInput
+}
+
+/**
+ * ApartmentCountOutputType without action
+ */
+export type ApartmentCountOutputTypeCountAvailabilityArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ApartmentAvailabilityWhereInput
 }
 
 
@@ -796,6 +922,7 @@ export type ApartmentSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   maxNights?: boolean
   bookingBuffer?: boolean
   bookings?: boolean | Prisma.Apartment$bookingsArgs<ExtArgs>
+  availability?: boolean | Prisma.Apartment$availabilityArgs<ExtArgs>
   _count?: boolean | Prisma.ApartmentCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["apartment"]>
 
@@ -856,6 +983,7 @@ export type ApartmentSelectScalar = {
 export type ApartmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sanityId" | "name" | "slug" | "description" | "basePrice" | "capacity" | "size" | "image" | "location" | "features" | "isActive" | "minNights" | "maxNights" | "bookingBuffer", ExtArgs["result"]["apartment"]>
 export type ApartmentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   bookings?: boolean | Prisma.Apartment$bookingsArgs<ExtArgs>
+  availability?: boolean | Prisma.Apartment$availabilityArgs<ExtArgs>
   _count?: boolean | Prisma.ApartmentCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ApartmentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -865,6 +993,7 @@ export type $ApartmentPayload<ExtArgs extends runtime.Types.Extensions.InternalA
   name: "Apartment"
   objects: {
     bookings: Prisma.$BookingPayload<ExtArgs>[]
+    availability: Prisma.$ApartmentAvailabilityPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1277,6 +1406,7 @@ readonly fields: ApartmentFieldRefs;
 export interface Prisma__ApartmentClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   bookings<T extends Prisma.Apartment$bookingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Apartment$bookingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BookingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  availability<T extends Prisma.Apartment$availabilityArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Apartment$availabilityArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ApartmentAvailabilityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1730,6 +1860,30 @@ export type Apartment$bookingsArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.BookingScalarFieldEnum | Prisma.BookingScalarFieldEnum[]
+}
+
+/**
+ * Apartment.availability
+ */
+export type Apartment$availabilityArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ApartmentAvailability
+   */
+  select?: Prisma.ApartmentAvailabilitySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ApartmentAvailability
+   */
+  omit?: Prisma.ApartmentAvailabilityOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ApartmentAvailabilityInclude<ExtArgs> | null
+  where?: Prisma.ApartmentAvailabilityWhereInput
+  orderBy?: Prisma.ApartmentAvailabilityOrderByWithRelationInput | Prisma.ApartmentAvailabilityOrderByWithRelationInput[]
+  cursor?: Prisma.ApartmentAvailabilityWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ApartmentAvailabilityScalarFieldEnum | Prisma.ApartmentAvailabilityScalarFieldEnum[]
 }
 
 /**

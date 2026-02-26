@@ -55,6 +55,11 @@ export type UserPreferences = Prisma.UserPreferencesModel
  */
 export type Apartment = Prisma.ApartmentModel
 /**
+ * Model ApartmentAvailability
+ * 
+ */
+export type ApartmentAvailability = Prisma.ApartmentAvailabilityModel
+/**
  * Model Booking
  * 
  */
