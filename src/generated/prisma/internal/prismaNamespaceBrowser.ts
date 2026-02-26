@@ -54,6 +54,7 @@ export const ModelName = {
   User: 'User',
   UserPreferences: 'UserPreferences',
   Apartment: 'Apartment',
+  ApartmentAvailability: 'ApartmentAvailability',
   Booking: 'Booking'
 } as const
 
@@ -123,6 +124,20 @@ export const ApartmentScalarFieldEnum = {
 } as const
 
 export type ApartmentScalarFieldEnum = (typeof ApartmentScalarFieldEnum)[keyof typeof ApartmentScalarFieldEnum]
+
+
+export const ApartmentAvailabilityScalarFieldEnum = {
+  id: 'id',
+  apartmentId: 'apartmentId',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  type: 'type',
+  reason: 'reason',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ApartmentAvailabilityScalarFieldEnum = (typeof ApartmentAvailabilityScalarFieldEnum)[keyof typeof ApartmentAvailabilityScalarFieldEnum]
 
 
 export const BookingScalarFieldEnum = {

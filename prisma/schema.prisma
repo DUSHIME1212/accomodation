@@ -58,7 +58,24 @@ model Apartment {
   bookingBuffer Int      @default(0)
   
   bookings      Booking[]
+  availability  ApartmentAvailability[]
 }
+
+model ApartmentAvailability {
+  id          String    @id @default(cuid())
+  apartmentId String
+  apartment   Apartment @relation(fields: [apartmentId], references: [id])
+  startDate   DateTime
+  endDate     DateTime
+  type        String    // "BLOCKED", "MAINTENANCE", etc.
+  reason      String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([apartmentId])
+  @@index([startDate, endDate])
+}
+
 model Booking {
   id                    String    @id @default(cuid())
   confirmationNumber    String    @unique @default(cuid())

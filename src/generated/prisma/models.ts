@@ -11,5 +11,6 @@
 export type * from './models/User'
 export type * from './models/UserPreferences'
 export type * from './models/Apartment'
+export type * from './models/ApartmentAvailability'
 export type * from './models/Booking'
 export type * from './commonInputTypes'
