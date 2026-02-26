@@ -1,54 +1,62 @@
 "use client";
-import { Facebook, Instagram, Twitter, Mail, Phone, MapPin, ArrowUpRight } from "lucide-react";
+import {
+  Facebook,
+  Instagram,
+  Twitter,
+  Mail,
+  Phone,
+  MapPin,
+  ArrowUpRight,
+} from "lucide-react";
 import { useLanguage } from "./LanguageContext";
 import Link from "next/link";
 
 export default function Footer() {
   const { t } = useLanguage();
   const currentYear = new Date().getFullYear();
-  
+
   return (
-    <footer className="bg-[#111111] text-white pt-24 pb-12 px-8 md:px-16 lg:px-32">
-      <div className="max-w-7xl mx-auto">
+    <footer className="bg-secondary/30 text-foreground border-border/10 border-t px-8 pt-24 pb-12 md:px-16 lg:px-32">
+      <div className="mx-auto max-w-7xl">
         {/* --- TOP SECTION: BRANDING --- */}
         <div className="mb-20">
-          <h2 className="text-6xl md:text-8xl lg:text-9xl font-serif text-white/10 leading-none select-none">
+          <h2 className="text-foreground/5 font-serif text-6xl leading-none select-none md:text-8xl lg:text-9xl">
             Silver Horizon
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-16 mb-20">
+        <div className="mb-20 grid grid-cols-1 gap-16 md:grid-cols-12">
           {/* Mission & Social */}
-          <div className="md:col-span-4 space-y-8">
-            <h4 className="text-[#D4AF37] text-xs font-bold uppercase tracking-[0.3em]">
+          <div className="space-y-8 md:col-span-4">
+            <h4 className="text-primary text-xs font-bold tracking-[0.3em] uppercase">
               The Vision
             </h4>
-            <p className="text-white/60 font-light leading-relaxed text-lg">
+            <p className="text-muted-foreground text-lg leading-relaxed font-light">
               {t.footer.description}
             </p>
-            <div className="flex space-x-6 text-white">
+            <div className="text-foreground flex space-x-6">
               {[
                 { Icon: Instagram, label: "Instagram" },
                 { Icon: Facebook, label: "Facebook" },
-                { Icon: Twitter, label: "Twitter" }
+                { Icon: Twitter, label: "Twitter" },
               ].map((social) => (
-                <a 
+                <a
                   key={social.label}
-                  href="#" 
-                  className="text-white hover:text-[#D4AF37] transition-all duration-500 flex items-center gap-1 group"
+                  href="#"
+                  className="text-foreground/70 hover:text-primary group flex items-center gap-1 transition-all duration-500"
                 >
                   <social.Icon size={16} strokeWidth={1.5} />
-                  <span className="text-[10px] uppercase tracking-widest hidden lg:block opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span className="hidden text-[10px] tracking-widest uppercase opacity-0 transition-opacity group-hover:opacity-100 lg:block">
                     {social.label}
                   </span>
                 </a>
               ))}
             </div>
           </div>
-          
+
           {/* Navigation */}
-          <div className="md:col-span-2 space-y-8">
-            <h4 className="text-white/40 text-[10px] font-bold uppercase tracking-[0.3em]">
+          <div className="space-y-8 md:col-span-2">
+            <h4 className="text-muted-foreground/40 text-[10px] font-bold tracking-[0.3em] uppercase">
               Explore
             </h4>
             <ul className="space-y-4">
@@ -59,12 +67,12 @@ export default function Footer() {
                 { name: t.nav.gallery, path: "/gallery" },
               ].map((link) => (
                 <li key={link.name}>
-                  <Link 
-                    href={link.path} 
-                    className="text-white/70 hover:text-white transition-colors text-sm font-light flex items-center group"
+                  <Link
+                    href={link.path}
+                    className="text-muted-foreground hover:text-foreground group flex items-center text-sm font-light transition-colors"
                   >
                     {link.name}
-                    <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all -translate-y-1 ml-1" />
+                    <ArrowUpRight className="ml-1 h-3 w-3 -translate-y-1 opacity-0 transition-all group-hover:opacity-100" />
                   </Link>
                 </li>
               ))}
@@ -72,62 +80,82 @@ export default function Footer() {
           </div>
 
           {/* Contact */}
-          <div className="md:col-span-3 space-y-8">
-            <h4 className="text-white/40 text-[10px] font-bold uppercase tracking-[0.3em]">
+          <div className="space-y-8 md:col-span-3">
+            <h4 className="text-muted-foreground/40 text-[10px] font-bold tracking-[0.3em] uppercase">
               Inquiries
             </h4>
-            <ul className="space-y-6 text-sm font-light text-white/70">
+            <ul className="text-muted-foreground/70 space-y-6 text-sm font-light">
               <li className="flex gap-4">
-                <MapPin className="w-4 h-4 text-[#D4AF37] shrink-0" />
-                <span>123 Coastal Avenue<br />Kigali, Rwanda</span>
+                <MapPin className="text-primary h-4 w-4 shrink-0" />
+                <span>
+                  123 Coastal Avenue
+                  <br />
+                  Kigali, Rwanda
+                </span>
               </li>
               <li className="flex items-center gap-4">
-                <Phone className="w-4 h-4 text-[#D4AF37] shrink-0" />
+                <Phone className="text-primary h-4 w-4 shrink-0" />
                 <span>+250 782 454 192</span>
               </li>
               <li className="flex items-center gap-4">
-                <Mail className="w-4 h-4 text-[#D4AF37] shrink-0" />
-                <span className="border-b border-white/10 hover:border-[#D4AF37] transition-colors cursor-pointer">
+                <Mail className="text-primary h-4 w-4 shrink-0" />
+                <span className="hover:border-primary border-border/10 cursor-pointer border-b transition-colors">
                   concierge@silverhorizon.com
                 </span>
               </li>
             </ul>
           </div>
-          
+
           {/* Newsletter */}
-          <div className="md:col-span-3 space-y-8">
-            <h4 className="text-white/40 text-[10px] font-bold uppercase tracking-[0.3em]">
+          <div className="space-y-8 md:col-span-3">
+            <h4 className="text-muted-foreground/40 text-[10px] font-bold tracking-[0.3em] uppercase">
               The Journal
             </h4>
-            <p className="text-white/50 text-xs font-light leading-relaxed">
-              Join our curated list for exclusive seasonal offers and coastal insights.
+            <p className="text-muted-foreground/50 text-xs leading-relaxed font-light">
+              Join our curated list for exclusive seasonal offers and coastal
+              insights.
             </p>
-            <form className="relative group">
-              <input 
-                type="email" 
-                placeholder="EMAIL ADDRESS" 
-                className="w-full bg-transparent border-b border-white/20 py-3 text-[10px] tracking-[0.2em] outline-none focus:border-[#D4AF37] transition-colors placeholder:text-white/20"
-                required 
+            <form className="group relative">
+              <input
+                type="email"
+                placeholder="EMAIL ADDRESS"
+                className="focus:border-primary border-border/20 placeholder:text-muted-foreground/20 w-full border-b bg-transparent py-3 text-[10px] tracking-[0.2em] transition-colors outline-none"
+                required
               />
-              <button 
-                type="submit" 
-                className="absolute right-0 bottom-3 text-white/40 hover:text-white transition-colors"
+              <button
+                type="submit"
+                className="text-muted-foreground/40 hover:text-foreground absolute right-0 bottom-3 transition-colors"
               >
-                <ArrowUpRight className="w-5 h-5" />
+                <ArrowUpRight className="h-5 w-5" />
               </button>
             </form>
           </div>
         </div>
-        
+
         {/* --- BOTTOM BAR --- */}
-        <div className="border-t border-white/5 pt-12 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-[10px] uppercase tracking-[0.2em] text-white/30">
+        <div className="border-border/10 flex flex-col items-center justify-between gap-6 border-t pt-12 md:flex-row">
+          <p className="text-muted-foreground/30 text-[10px] tracking-[0.2em] uppercase">
             &copy; {currentYear} Silver Horizon Luxury Hotel Group
           </p>
-          <div className="flex gap-8 text-[10px] uppercase tracking-[0.2em] text-white/30">
-            <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
-            <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
-            <Link href="/cookies" className="hover:text-white transition-colors">Cookies</Link>
+          <div className="text-muted-foreground/30 flex gap-8 text-[10px] tracking-[0.2em] uppercase">
+            <Link
+              href="/privacy"
+              className="hover:text-foreground transition-colors"
+            >
+              Privacy
+            </Link>
+            <Link
+              href="/terms"
+              className="hover:text-foreground transition-colors"
+            >
+              Terms
+            </Link>
+            <Link
+              href="/cookies"
+              className="hover:text-foreground transition-colors"
+            >
+              Cookies
+            </Link>
           </div>
         </div>
       </div>

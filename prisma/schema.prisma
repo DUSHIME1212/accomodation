@@ -1,20 +1,209 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+  provider = "postgresql"
 }
 
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  passwordHash  String
+  firstName     String?
+  lastName      String?
+  phone         String?
+  dateOfBirth   DateTime?
+  nationality   String?
+  loyaltyNumber String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
 
-    @@index([name])
+  preferences   UserPreferences?
+}
+
+model UserPreferences {
+  id                String  @id @default(cuid())
+  userId            String  @unique
+  user              User    @relation(fields: [userId], references: [id])
+  
+  preferredLanguage String  @default("en")
+  floorPreference   String? // "high", "low", "middle"
+  roomViewPref      String? // "city", "ocean", "garden"
+  bedTypePreference String? // "king", "twin", "queen"
+  
+  marketingEmails   Boolean @default(false)
+  marketingSMS      Boolean @default(false)
+}
+
+model Apartment {
+  id            String   @id @default(cuid())
+  sanityId      String   @unique
+  name          String
+  slug          String   @unique
+  description   String?
+  basePrice     Float
+  capacity      Int
+  size          Int?
+  image         String?
+  location      String?
+  features      String[]
+  isActive      Boolean  @default(true)
+  
+  // Booking constraints
+  minNights     Int      @default(1)
+  maxNights     Int      @default(30)
+  bookingBuffer Int      @default(0)
+  
+  bookings      Booking[]
+}
+model Booking {
+  id                    String    @id @default(cuid())
+  confirmationNumber    String    @unique @default(cuid())
+  bookingAccessToken    String?   @unique // For guests to view/manage booking
+  
+  // Property & Dates
+  apartmentId           String
+  apartment             Apartment @relation(fields: [apartmentId], references: [id])
+  checkInDate           DateTime
+  checkOutDate          DateTime
+  numberOfNights        Int
+  
+  // Guest Details
+  guestFirstName        String
+  guestLastName         String
+  guestEmail            String
+  guestPhone            String
+  guestDateOfBirth      DateTime?
+  guestNationality      String?
+  guestPassportId       String?    // ID or Passport number
+  
+  // Guest Address
+  address               String
+  city                  String
+  zipCode               String
+  country               String
+  
+  // Occupancy
+  adults                Int       @default(1)
+  children              Int       @default(0)
+  infantsUnder2         Int       @default(0)
+  
+  // Emergency Contact
+  emergencyContactName  String?
+  emergencyContactPhone String?
+  emergencyRelationship String?
+  
+  // Arrival Information
+  estimatedArrivalTime  String?   // "14:00", "After 18:00"
+  flightNumber          String?   // If applicable
+  earlyCheckInRequest   Boolean   @default(false)
+  lateCheckOutRequest   Boolean   @default(false)
+  
+  // Room Preferences
+  floorPreference       String?   // "high", "low", "no-preference"
+  viewPreference        String?   // "city", "garden", "ocean", "no-preference"
+  bedTypePreference     String?   // "king", "twin", "queen"
+  smokingRoom           Boolean   @default(false)
+  accessibleRoom        Boolean   @default(false)
+  
+  // Additional Services
+  airportTransferNeeded Boolean   @default(false)
+  transferPickupTime    String?
+  transferDropoffTime   String?
+  
+  parkingRequired       Boolean   @default(false)
+  numberOfVehicles      Int       @default(0)
+  
+  breakfastIncluded     Boolean   @default(false)
+  breakfastGuests       Int       @default(0)
+  
+  extraBedRequested     Boolean   @default(false)
+  cribRequested         Boolean   @default(false)
+  
+  // Special Requests & Notes
+  specialRequests       String?
+  dietaryRestrictions   String?
+  purposeOfStay         String?   // "leisure", "business", "celebration"
+  celebrationDetails    String?   // If it's birthday/anniversary
+  
+  // Payment Information
+  paymentMethod         String    // "credit-card", "pay-at-property"
+  cardName              String?
+  cardLastFour          String?
+  cardExpiry            String?
+  
+  // Pricing Breakdown
+  basePrice             Float
+  numberOfNightsCounted Int
+  subtotal              Float     // basePrice * nights
+  cleaningFee           Float     @default(50)
+  serviceFee            Float     @default(30)
+  taxRate               Float     @default(0.10) // 10%
+  taxAmount             Float
+  totalPrice            Float
+  
+  depositRequired       Float     @default(0)
+  depositPaid           Float     @default(0)
+  
+  currency              String    @default("USD")
+  
+  // Legal Acknowledgments
+  termsAccepted         Boolean   @default(false)
+  termsAcceptedAt       DateTime?
+  cancellationPolicyAccepted Boolean @default(false)
+  ageVerified           Boolean   @default(false) // Confirmed 18+
+  
+  // Communication Preferences
+  preferredLanguage     String    @default("en")
+  sendEmailConfirmation Boolean   @default(true)
+  sendSMSConfirmation   Boolean   @default(false)
+  marketingOptIn        Boolean   @default(false)
+  
+  // Booking Status & Management
+  status                String    @default("pending") // "pending", "confirmed", "checked-in", "checked-out", "cancelled"
+  bookingSource         String    @default("website")
+  assignedRoomNumber    String?
+  
+  // Cancellation
+  cancelledAt           DateTime?
+  cancellationReason    String?
+  refundAmount          Float     @default(0)
+  cancellationFee       Float     @default(0)
+  
+  // Internal Notes (Staff Only)
+  internalNotes         String?
+  staffAssignedTo       String?
+  
+  // Timestamps
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  confirmedAt           DateTime?
+  
+  @@index([confirmationNumber])
+  @@index([guestEmail])
+  @@index([status])
+  @@index([checkInDate])
+  @@index([bookingAccessToken])
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+enum PaymentMethod {
+  CREDIT_CARD
+  PAY_AT_PROPERTY
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  REFUNDED
+  FAILED
 }

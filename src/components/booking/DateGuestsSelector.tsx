@@ -36,40 +36,49 @@ export default function DateGuestsSelector({
   onStartDateChange,
   onEndDateChange,
   onAdultsChange,
-  onChildrenChange
+  onChildrenChange,
 }: DateGuestsSelectorProps) {
   return (
-    <div className="space-y-8 mb-12 animate-in fade-in slide-in-from-bottom-4 duration-1000">
+    <div className="animate-in fade-in slide-in-from-bottom-4 mb-12 space-y-8 duration-1000">
       {/* Editorial Header */}
-      <div className="flex items-end justify-between border-b border-black/[0.03] dark:border-white/[0.03] pb-4">
+      <div className="flex items-end justify-between border-b border-black/[0.03] pb-4 dark:border-white/[0.03]">
         <div className="space-y-1">
-          <p className="text-[10px] uppercase tracking-[0.4em] font-bold text-primary">01 / Timing & Company</p>
-          <h2 className="text-3xl font-serif italic tracking-tight">Plan Your Arrival</h2>
+          <p className="text-primary text-[10px] font-bold tracking-[0.4em] uppercase">
+            01 / Timing & Company
+          </p>
+          <h2 className="font-serif text-3xl tracking-tight italic">
+            Plan Your Arrival
+          </h2>
         </div>
-        <Sparkles className="w-5 h-5 text-primary/20 mb-1" />
+        <Sparkles className="text-primary/20 mb-1 h-5 w-5" />
       </div>
 
-<div className="bg-white dark:bg-[#0c0c0c] border border-black/[0.03] dark:border-white/[0.05] rounded-[2rem] p-2 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.06)]">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 items-center">
-          
+      <div className="bg-background border-border/20 rounded-[2rem] border p-2 shadow-2xl">
+        <div className="grid grid-cols-1 items-center md:grid-cols-2 lg:grid-cols-4">
           {/* Arrival Date */}
-          <div className="relative group p-6">
-            <label className="text-[9px] uppercase tracking-[0.2em] font-black text-muted-foreground/60 mb-2 block ml-1 transition-colors group-hover:text-primary">
+          <div className="group relative p-6">
+            <label className="text-muted-foreground/60 group-hover:text-primary mb-2 ml-1 block text-[9px] font-black tracking-[0.2em] uppercase transition-colors">
               Arrival
             </label>
             <Popover>
               <PopoverTrigger asChild>
-                <button className="flex items-center w-full text-left outline-none">
-                  <span className={cn(
-                    "text-lg font-medium tracking-tight",
-                    !startDate && "text-muted-foreground/40 font-light italic"
-                  )}>
+                <button className="text-foreground flex w-full items-center text-left outline-none">
+                  <span
+                    className={cn(
+                      "text-lg font-medium tracking-tight",
+                      !startDate &&
+                        "text-muted-foreground/40 font-light italic",
+                    )}
+                  >
                     {startDate ? format(startDate, "MMMM dd") : "Select date"}
                   </span>
-                  <CalendarIcon className="ml-auto h-4 w-4 text-primary/30" />
+                  <CalendarIcon className="text-primary/30 ml-auto h-4 w-4" />
                 </button>
               </PopoverTrigger>
-<PopoverContent className="w-auto p-4 rounded-3xl border-black/5 dark:border-white/10 shadow-2xl backdrop-blur-xl bg-white/90 dark:bg-black/90" align="start">
+              <PopoverContent
+                className="border-border bg-background/90 w-auto rounded-3xl border p-4 shadow-2xl backdrop-blur-xl"
+                align="start"
+              >
                 <Calendar
                   mode="single"
                   selected={startDate}
@@ -79,27 +88,32 @@ export default function DateGuestsSelector({
                 />
               </PopoverContent>
             </Popover>
-            <div className="hidden lg:block absolute right-0 top-1/4 bottom-1/4 w-px bg-black/[0.03] dark:bg-white/[0.05]" />
+            <div className="bg-border/40 absolute top-1/4 right-0 bottom-1/4 hidden w-px lg:block" />
           </div>
 
           {/* Departure Date */}
-          <div className="relative group p-6">
-            <label className="text-[9px] uppercase tracking-[0.2em] font-black text-muted-foreground/60 mb-2 block ml-1 transition-colors group-hover:text-primary">
+          <div className="group relative p-6">
+            <label className="text-muted-foreground/60 group-hover:text-primary mb-2 ml-1 block text-[9px] font-black tracking-[0.2em] uppercase transition-colors">
               Departure
             </label>
             <Popover>
               <PopoverTrigger asChild>
-                <button className="flex items-center w-full text-left outline-none">
-                  <span className={cn(
-                    "text-lg font-medium tracking-tight",
-                    !endDate && "text-muted-foreground/40 font-light italic"
-                  )}>
+                <button className="text-foreground flex w-full items-center text-left outline-none">
+                  <span
+                    className={cn(
+                      "text-lg font-medium tracking-tight",
+                      !endDate && "text-muted-foreground/40 font-light italic",
+                    )}
+                  >
                     {endDate ? format(endDate, "MMMM dd") : "Select date"}
                   </span>
-                  <CalendarIcon className="ml-auto h-4 w-4 text-primary/30" />
+                  <CalendarIcon className="text-primary/30 ml-auto h-4 w-4" />
                 </button>
               </PopoverTrigger>
-              <PopoverContent className="w-auto p-4 rounded-3xl border-black/5 dark:border-white/10 shadow-2xl backdrop-blur-xl bg-white/90 dark:bg-black/90" align="start">
+              <PopoverContent
+                className="border-border bg-background/90 w-auto rounded-3xl border p-4 shadow-2xl backdrop-blur-xl"
+                align="start"
+              >
                 <Calendar
                   mode="single"
                   selected={endDate}
@@ -109,42 +123,52 @@ export default function DateGuestsSelector({
                 />
               </PopoverContent>
             </Popover>
-            <div className="hidden lg:block absolute right-0 top-1/4 bottom-1/4 w-px bg-black/[0.03] dark:bg-white/[0.05]" />
+            <div className="bg-border/40 absolute top-1/4 right-0 bottom-1/4 hidden w-px lg:block" />
           </div>
 
-{/* Adults Selection */}
-          <div className="relative group p-6">
-            <label className="text-[9px] uppercase tracking-[0.2em] font-black text-muted-foreground/60 mb-2 block ml-1 transition-colors group-hover:text-primary">
+          {/* Adults Selection */}
+          <div className="group relative p-6">
+            <label className="text-muted-foreground/60 group-hover:text-primary mb-2 ml-1 block text-[9px] font-black tracking-[0.2em] uppercase transition-colors">
               Adults
             </label>
             <Select value={adults} onValueChange={onAdultsChange}>
-              <SelectTrigger className="border-0 p-0 h-auto bg-transparent focus:ring-0 text-lg font-medium tracking-tight">
+              <SelectTrigger className="text-foreground h-auto border-0 bg-transparent p-0 text-lg font-medium tracking-tight focus:ring-0">
                 <SelectValue placeholder="Select" />
               </SelectTrigger>
-              <SelectContent className="rounded-2xl border-black/5 dark:border-white/10 shadow-2xl">
+              <SelectContent className="border-border bg-background rounded-2xl border shadow-2xl">
                 {[1, 2, 3, 4, 5, 6].map((num) => (
-                  <SelectItem key={num} value={num.toString()} className="rounded-lg">
+                  <SelectItem
+                    key={num}
+                    value={num.toString()}
+                    className="rounded-lg"
+                  >
                     {num} {num === 1 ? "Guest" : "Guests"}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
-            <div className="hidden lg:block absolute right-0 top-1/4 bottom-1/4 w-px bg-black/[0.03] dark:bg-white/[0.05]" />
+            <div className="bg-border/40 absolute top-1/4 right-0 bottom-1/4 hidden w-px lg:block" />
           </div>
 
           {/* Children Selection */}
           <div className="group p-6">
-            <label className="text-[9px] uppercase tracking-[0.2em] font-black text-muted-foreground/60 mb-2 block ml-1 transition-colors group-hover:text-primary">
+            <label className="text-muted-foreground/60 group-hover:text-primary mb-2 ml-1 block text-[9px] font-black tracking-[0.2em] uppercase transition-colors">
               Children
             </label>
             <Select value={children} onValueChange={onChildrenChange}>
-              <SelectTrigger className="border-0 p-0 h-auto bg-transparent focus:ring-0 text-lg font-medium tracking-tight">
+              <SelectTrigger className="text-foreground h-auto border-0 bg-transparent p-0 text-lg font-medium tracking-tight focus:ring-0">
                 <SelectValue placeholder="None" />
               </SelectTrigger>
-              <SelectContent className="rounded-2xl border-black/5 dark:border-white/10 shadow-2xl">
+              <SelectContent className="border-border bg-background rounded-2xl border shadow-2xl">
                 {[0, 1, 2, 3, 4].map((num) => (
-                  <SelectItem key={num} value={num.toString()} className="rounded-lg">
-                    {num === 0 ? "No Children" : `${num} ${num === 1 ? "Child" : "Children"}`}
+                  <SelectItem
+                    key={num}
+                    value={num.toString()}
+                    className="rounded-lg"
+                  >
+                    {num === 0
+                      ? "No Children"
+                      : `${num} ${num === 1 ? "Child" : "Children"}`}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -154,13 +178,18 @@ export default function DateGuestsSelector({
       </div>
 
       {/* Quick Summary / Status */}
-      <div className="flex items-center justify-center gap-8 text-[10px] uppercase tracking-widest text-muted-foreground/50 font-bold">
+      <div className="text-muted-foreground/50 flex items-center justify-center gap-8 text-[10px] font-bold tracking-widest uppercase">
         <div className="flex items-center gap-2">
-          <div className={cn("w-1.5 h-1.5 rounded-full", startDate && endDate ? "bg-green-500" : "bg-primary/20")} />
+          <div
+            className={cn(
+              "h-1.5 w-1.5 rounded-full",
+              startDate && endDate ? "bg-green-500" : "bg-primary/20",
+            )}
+          />
           <span>Validity Period</span>
         </div>
         <div className="flex items-center gap-2">
-          <Users className="w-3 h-3" />
+          <Users className="h-3 w-3" />
           <span>Bespoke Occupancy</span>
         </div>
       </div>
