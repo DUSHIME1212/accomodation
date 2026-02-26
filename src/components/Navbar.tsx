@@ -130,7 +130,7 @@ export default function Navbar() {
       {/* Full-Screen Mobile Overlay */}
       <div
         className={cn(
-          "bg-background fixed inset-0 z-[110] flex flex-col items-center justify-center transition-all duration-1000 ease-[cubic-bezier(0.8,0,0.2,1)]",
+          "bg-background absolute top-20 right-0 left-0 z-[150] flex flex-col h-fit py-8 items-center justify-center transition-all duration-1000 ease-[cubic-bezier(0.8,0,0.2,1)] md:hidden",
           mobileMenuOpen ? "translate-x-0" : "translate-x-full",
         )}
       >
@@ -145,7 +145,7 @@ export default function Navbar() {
 
         <button
           onClick={() => setMobileMenuOpen(false)}
-          className="text-foreground group absolute top-8 right-8 p-4"
+          className="text-foreground absolute top-0 z-50 group right-8 p-4"
         >
           <X className="h-8 w-8 stroke-[1px] transition-transform duration-500 group-hover:rotate-90" />
         </button>
@@ -162,7 +162,7 @@ export default function Navbar() {
                   <span className="text-primary/40 font-mono text-xs">
                     0{idx + 1}
                   </span>
-                  <span className="text-foreground/20 group-hover:text-primary font-serif text-5xl italic transition-all duration-500 md:text-7xl">
+                  <span className="text-foreground/40 group-hover:text-primary font-serif text-5xl italic transition-all duration-500 md:text-7xl">
                     {link.name}
                   </span>
                 </Link>
@@ -171,7 +171,7 @@ export default function Navbar() {
           </ul>
         </nav>
 
-        <div className="absolute bottom-12 flex flex-col items-center gap-8">
+        <div className=" w-full flex flex-col items-center gap-8">
           <ThemeToggle />
           <div className="text-muted-foreground flex gap-8 text-[9px] font-black tracking-[0.4em] uppercase">
             <span>Instagram</span>

@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { SyncService } from "../src/lib/services/sync.service";
 
 async function main() {
