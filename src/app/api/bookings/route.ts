@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { BookingService } from "@/lib/services/booking.service";
 import { AvailabilityService } from "@/lib/services/availability.service";
 import { z } from "zod";
-import { PaymentMethod } from "@/generated/prisma/client";
+import { PaymentMethod } from "@prisma/client";
 
 const createBookingSchema = z.object({
   apartmentId: z.string().min(1),

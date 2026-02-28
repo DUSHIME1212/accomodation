@@ -4,6 +4,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { BookingService } from "@/lib/services/booking.service";
 import prisma from "@/lib/prisma";
+import { BookingStatus } from "@prisma/client";
 
 export async function GET(request: NextRequest) {
   try {
@@ -34,7 +35,7 @@ export async function GET(request: NextRequest) {
     const upcomingCheckIns = await prisma.booking.findMany({
       where: {
         apartmentId,
-        status: "confirmed",
+        status: BookingStatus.CONFIRMED,
         checkInDate: {
           gte: new Date(),
           lte: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
@@ -52,7 +53,7 @@ export async function GET(request: NextRequest) {
     const currentGuests = await prisma.booking.findMany({
       where: {
         apartmentId,
-        status: "checked-in",
+        status: BookingStatus.CHECKED_IN,
       },
       include: {
         apartment: true,

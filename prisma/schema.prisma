@@ -1,6 +1,5 @@
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -22,6 +21,18 @@ model User {
   
 
   preferences   UserPreferences?
+  role          UserRole  @default(GUEST)
+
+  // Messaging & Notifications
+  messages      Message[]
+  conversations ConversationParticipant[]
+  notifications Notification[]
+}
+
+enum UserRole {
+  GUEST
+  ADMIN
+  STAFF
 }
 
 model UserPreferences {
@@ -36,6 +47,7 @@ model UserPreferences {
   
   marketingEmails   Boolean @default(false)
   marketingSMS      Boolean @default(false)
+  theme             String  @default("light") // "light", "dark", "system"
 }
 
 model Apartment {
@@ -52,6 +64,10 @@ model Apartment {
   features      String[]
   isActive      Boolean  @default(true)
   
+  // New Status & Maintenance fields
+  status        RoomStatus @default(AVAILABLE)
+  assignedStaffId String?
+  
   // Booking constraints
   minNights     Int      @default(1)
   maxNights     Int      @default(30)
@@ -59,6 +75,45 @@ model Apartment {
   
   bookings      Booking[]
   availability  ApartmentAvailability[]
+}
+
+enum RoomStatus {
+  AVAILABLE
+  OCCUPIED
+  TO_CLEAN
+  OUT_OF_SERVICE
+  REPAIR
+}
+
+model Conversation {
+  id            String    @id @default(cuid())
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  lastMessageAt DateTime  @default(now())
+  
+  participants  ConversationParticipant[]
+  messages      Message[]
+}
+
+model ConversationParticipant {
+  id             String       @id @default(cuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  userId         String
+  user           User         @relation(fields: [userId], references: [id])
+  
+  @@unique([conversationId, userId])
+}
+
+model Message {
+  id             String       @id @default(cuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  senderId       String
+  sender         User         @relation(fields: [senderId], references: [id])
+  content        String
+  createdAt      DateTime     @default(now())
+  read           Boolean      @default(false)
 }
 
 model ApartmentAvailability {
@@ -180,9 +235,15 @@ model Booking {
   marketingOptIn        Boolean   @default(false)
   
   // Booking Status & Management
-  status                String    @default("pending") // "pending", "confirmed", "checked-in", "checked-out", "cancelled"
+  status                BookingStatus @default(PENDING)
+  paymentStatus         PaymentStatus @default(PENDING)
   bookingSource         String    @default("website")
   assignedRoomNumber    String?
+  
+  // Device & Meta
+  cardBrand             String?
+  ipAddress             String?
+  userAgent             String?
   
   // Cancellation
   cancelledAt           DateTime?
@@ -206,10 +267,35 @@ model Booking {
   @@index([bookingAccessToken])
 }
 
+model AuditLog {
+  id        String   @id @default(cuid())
+  entity    String
+  entityId  String
+  action    String
+  userEmail String
+  changes   Json?
+  metadata  Json?
+  createdAt DateTime @default(now())
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  title     String
+  message   String
+  type      String   @default("info") // "info", "success", "warning", "error"
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
 enum BookingStatus {
   PENDING
   CONFIRMED
+  CHECKED_IN
+  CHECKED_OUT
   CANCELLED
+  NO_SHOW
   COMPLETED
 }
 
@@ -220,6 +306,7 @@ enum PaymentMethod {
 
 enum PaymentStatus {
   PENDING
+  AUTHORIZED
   PAID
   REFUNDED
   FAILED

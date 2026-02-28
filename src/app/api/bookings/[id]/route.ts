@@ -3,7 +3,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { BookingService } from "@/lib/services/booking.service";
-import { BookingStatus, PaymentStatus } from "@/generated/prisma/client";
+import { BookingStatus, PaymentStatus } from "@prisma/client";
 import { z } from "zod";
 
 const updateBookingSchema = z.object({
