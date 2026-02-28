@@ -26,7 +26,19 @@ export async function GET(request: NextRequest) {
       ];
     }
     if (status !== "all") {
-      where.status = status;
+      const statusMap: Record<string, BookingStatus> = {
+        confirmed: BookingStatus.CONFIRMED,
+        "checked-in": BookingStatus.CHECKED_IN,
+        "checked-out": BookingStatus.CHECKED_OUT,
+        pending: BookingStatus.PENDING,
+        cancelled: BookingStatus.CANCELLED,
+        completed: BookingStatus.COMPLETED,
+        "no-show": BookingStatus.NO_SHOW,
+      };
+      const mappedStatus = statusMap[status.toLowerCase()];
+      if (mappedStatus) {
+        where.status = mappedStatus;
+      }
     }
 
     const [bookings, total] = await Promise.all([

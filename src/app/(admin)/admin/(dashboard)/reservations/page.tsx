@@ -33,6 +33,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import { Select } from "@/components/ui/select";
 
 export default function ReservationsPage() {
   const [bookings, setBookings] = useState<any[]>([]);
@@ -364,17 +365,17 @@ export default function ReservationsPage() {
       <Dialog open={isNewBookingOpen} onOpenChange={setIsNewBookingOpen}>
         <DialogContent className="border-border bg-card rounded-3xl p-8 sm:max-w-[600px]">
           <DialogHeader>
-            <DialogTitle className="decoration-primary/20 text-3xl font-black tracking-tighter uppercase underline decoration-8 underline-offset-[-2px]">
+            <DialogTitle className="decoration-primary/20 text-3xl tracking-tighter uppercase underline decoration-8 underline-offset-[-2px]">
               New Reservation
             </DialogTitle>
-            <p className="text-muted-foreground mt-2 text-[10px] font-black tracking-widest uppercase">
+            <p className="text-muted-foreground mt-2 text-[10px] uppercase">
               Manual administration booking entry
             </p>
           </DialogHeader>
           <div className="grid gap-6 py-8">
             <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
-                <Label className="text-muted-foreground text-[10px] font-black uppercase">
+                <Label className="text-muted-foreground text-[10px] uppercase">
                   Guest First Name
                 </Label>
                 <Input
@@ -386,7 +387,7 @@ export default function ReservationsPage() {
                 />
               </div>
               <div className="grid gap-2">
-                <Label className="text-muted-foreground text-[10px] font-black uppercase">
+                <Label className="text-muted-foreground text-[10px] uppercase">
                   Guest Last Name
                 </Label>
                 <Input
@@ -399,7 +400,7 @@ export default function ReservationsPage() {
               </div>
             </div>
             <div className="grid gap-2">
-              <Label className="text-muted-foreground text-[10px] font-black uppercase">
+              <Label className="text-muted-foreground text-[10px] uppercase">
                 Email Address
               </Label>
               <Input
@@ -412,15 +413,15 @@ export default function ReservationsPage() {
               />
             </div>
             <div className="grid gap-2">
-              <Label className="text-muted-foreground text-[10px] font-black uppercase">
+              <Label className="text-muted-foreground text-[10px] uppercase">
                 Room Assignment
               </Label>
               <select
                 value={form.apartmentId}
-                onChange={(e) =>
+                onChange={(e:any) =>
                   setForm({ ...form, apartmentId: e.target.value })
                 }
-                className="border-border bg-background h-12 w-full rounded-2xl border px-4 text-sm font-bold"
+                className="border-border bg-background h-12 w-full rounded-2xl border px-4 text-sm"
               >
                 <option value="">Select a room...</option>
                 {rooms.map((r) => (
@@ -432,7 +433,7 @@ export default function ReservationsPage() {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
-                <Label className="text-muted-foreground text-[10px] font-black uppercase">
+                <Label className="text-muted-foreground text-[10px] uppercase">
                   Check-in
                 </Label>
                 <Input
@@ -441,7 +442,7 @@ export default function ReservationsPage() {
                   onChange={(e) =>
                     setForm({ ...form, checkInDate: e.target.value })
                   }
-                  className="border-border h-12 rounded-2xl font-bold"
+                  className="border-border h-12 rounded-2xl"
                 />
               </div>
               <div className="grid gap-2">
@@ -454,7 +455,7 @@ export default function ReservationsPage() {
                   onChange={(e) =>
                     setForm({ ...form, checkOutDate: e.target.value })
                   }
-                  className="border-border h-12 rounded-2xl font-bold"
+                  className="border-border h-12 rounded-2xl"
                 />
               </div>
             </div>

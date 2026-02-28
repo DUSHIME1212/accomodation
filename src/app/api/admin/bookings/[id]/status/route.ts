@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getSession } from "@/lib/auth";
+import { BookingStatus } from "@prisma/client";
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const session = await getSession();
@@ -12,7 +13,7 @@ export async function PATCH(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { id } = params;
+    const { id } = await params;
     const { status } = await request.json();
 
     if (!status) {
@@ -22,9 +23,24 @@ export async function PATCH(
       );
     }
 
+    const statusMap: Record<string, BookingStatus> = {
+      confirmed: BookingStatus.CONFIRMED,
+      "checked-in": BookingStatus.CHECKED_IN,
+      "checked-out": BookingStatus.CHECKED_OUT,
+      pending: BookingStatus.PENDING,
+      cancelled: BookingStatus.CANCELLED,
+      completed: BookingStatus.COMPLETED,
+      "no-show": BookingStatus.NO_SHOW,
+    };
+
+    const mappedStatus = statusMap[status.toLowerCase()];
+    if (!mappedStatus) {
+      return NextResponse.json({ error: "Invalid status" }, { status: 400 });
+    }
+
     const updatedBooking = await prisma.booking.update({
       where: { id },
-      data: { status: status.toLowerCase() },
+      data: { status: mappedStatus },
     });
 
     return NextResponse.json(updatedBooking);

@@ -96,7 +96,7 @@ export default function AdminDashboard() {
             />
           </Link>
           <div className="grid grid-cols-2 gap-4">
-            <div className="bg-card border-border flex flex-col justify-between border p-4">
+            <div className="bg-card border-border rounded-2xl flex flex-col justify-between border p-4">
               <p className="text-muted-foreground text-[10px] uppercase">
                 Pending Check-ins
               </p>
@@ -104,7 +104,7 @@ export default function AdminDashboard() {
                 {data?.upcomingCheckIns?.length || 0}
               </p>
             </div>
-            <div className="bg-card border-border flex flex-col justify-between border p-4">
+            <div className="bg-card border-border rounded-2xl flex flex-col justify-between border p-4">
               <p className="text-muted-foreground text-[10px] uppercase">
                 Due Check-outs
               </p>
