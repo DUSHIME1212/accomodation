@@ -1,7 +1,7 @@
 // lib/services/email.service.ts
 // Email service for booking notifications
 
-import type { Booking, Apartment } from "@/generated/prisma/client";
+import type { Booking, Apartment } from "@prisma/client";
 
 type BookingWithApartment = Booking & {
   apartment: Apartment;

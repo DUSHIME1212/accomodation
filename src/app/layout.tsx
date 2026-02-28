@@ -35,9 +35,7 @@ export default function RootLayout({
           <LanguageProvider>
             {/* <Toaster /> */}
             <Sonner />
-            <Navbar />
             {children}
-            <Footer />
           </LanguageProvider>
         </ThemeProvider>
       </body>

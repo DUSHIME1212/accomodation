@@ -7,7 +7,7 @@ import {
   BookingStatus,
   PaymentMethod,
   PaymentStatus,
-} from "@/generated/prisma/client";
+} from "@prisma/client";
 import { AvailabilityService } from "./availability.service";
 
 export interface CreateBookingData {
@@ -67,7 +67,7 @@ export class BookingService {
 
     // Use a transaction to prevent race conditions
     return await prisma.$transaction(
-      async (tx: any) => {
+      async (tx) => {
         // 1. Lock the apartment row (prevents concurrent bookings)
         const apartment = await tx.apartment.findUnique({
           where: { id: data.apartmentId },
@@ -96,7 +96,11 @@ export class BookingService {
           where: {
             apartmentId: data.apartmentId,
             status: {
-              in: ["pending", "confirmed", "checked-in"],
+              in: [
+                BookingStatus.PENDING,
+                BookingStatus.CONFIRMED,
+                BookingStatus.CHECKED_IN,
+              ],
             },
             checkInDate: { lt: data.checkOutDate },
             checkOutDate: { gt: data.checkInDate },
@@ -140,7 +144,13 @@ export class BookingService {
           const adjacentBookings = await tx.booking.count({
             where: {
               apartmentId: data.apartmentId,
-              status: { in: ["pending", "confirmed", "checked-in"] },
+              status: {
+                in: [
+                  BookingStatus.PENDING,
+                  BookingStatus.CONFIRMED,
+                  BookingStatus.CHECKED_IN,
+                ],
+              },
               OR: [
                 {
                   AND: [
@@ -166,7 +176,7 @@ export class BookingService {
         }
 
         // 7. Calculate pricing
-        const basePrice = apartment.basePrice.toNumber() * nights;
+        const basePrice = apartment.basePrice * nights;
         const cleaningFee = 50;
         const serviceFee = 30;
         const totalPrice = basePrice + cleaningFee + serviceFee;
@@ -192,7 +202,8 @@ export class BookingService {
             adults: data.adults,
             children: data.children,
 
-            basePrice,
+            basePrice: apartment.basePrice,
+            subtotal: basePrice,
             cleaningFee,
             serviceFee,
             totalPrice,
@@ -200,16 +211,16 @@ export class BookingService {
             taxAmount: totalPrice * 0.1, // Mocking tax calculation
 
             paymentMethod: data.paymentMethod,
-            // paymentStatus: 'PENDING', // Missing from schema
+            paymentStatus: PaymentStatus.PENDING,
             cardLastFour: data.cardLastFour,
-            // cardBrand: data.cardBrand, // Missing from schema
+            cardBrand: data.cardBrand,
 
             specialRequests: data.specialRequests,
 
-            status: "pending",
+            status: BookingStatus.PENDING,
             bookingSource: data.source || "web",
-            // ipAddress: data.ipAddress, // Missing from schema
-            // userAgent: data.userAgent, // Missing from schema
+            ipAddress: data.ipAddress,
+            userAgent: data.userAgent,
           },
           include: {
             apartment: true,
@@ -217,8 +228,7 @@ export class BookingService {
         });
 
         // 9. Create audit log
-        // AuditLog model missing from schema
-        await (tx as any).auditLog.create({
+        await tx.auditLog.create({
           data: {
             entity: "booking",
             entityId: booking.id,
@@ -292,7 +302,7 @@ export class BookingService {
     data: UpdateBookingData,
     adminEmail?: string,
   ) {
-    return await prisma.$transaction(async (tx: any) => {
+    return await prisma.$transaction(async (tx) => {
       const booking = await tx.booking.update({
         where: { id },
         data,
@@ -307,8 +317,8 @@ export class BookingService {
           entity: "booking",
           entityId: id,
           action: "updated",
-          userEmail: adminEmail || booking.email,
-          changes: data,
+          userEmail: adminEmail || booking.guestEmail,
+          changes: data as unknown as Prisma.InputJsonValue,
         },
       });
 
@@ -353,7 +363,7 @@ export class BookingService {
           entity: "booking",
           entityId: id,
           action: "cancelled",
-          userEmail: adminEmail || booking.email,
+          userEmail: adminEmail || booking.guestEmail,
           metadata: {
             reason,
             cancelledAt: new Date(),
@@ -435,18 +445,24 @@ export class BookingService {
     const [total, confirmed, pending, cancelled, revenue] = await Promise.all([
       prisma.booking.count({ where }),
       prisma.booking.count({
-        where: { ...where, status: "CONFIRMED" },
+        where: { ...where, status: BookingStatus.CONFIRMED },
       }),
       prisma.booking.count({
-        where: { ...where, status: "PENDING" },
+        where: { ...where, status: BookingStatus.PENDING },
       }),
       prisma.booking.count({
-        where: { ...where, status: "CANCELLED" },
+        where: { ...where, status: BookingStatus.CANCELLED },
       }),
       prisma.booking.aggregate({
         where: {
           ...where,
-          status: { in: ["CONFIRMED", "CHECKED_IN", "CHECKED_OUT"] },
+          status: {
+            in: [
+              BookingStatus.CONFIRMED,
+              BookingStatus.CHECKED_IN,
+              BookingStatus.CHECKED_OUT,
+            ],
+          },
         },
         _sum: {
           totalPrice: true,
@@ -459,7 +475,7 @@ export class BookingService {
       confirmed,
       pending,
       cancelled,
-      revenue: Number(revenue._sum.totalPrice) || 0,
+      totalRevenue: Number(revenue._sum.totalPrice) || 0,
     };
   }
 }

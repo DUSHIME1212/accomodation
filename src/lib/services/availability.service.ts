@@ -2,7 +2,7 @@
 // Service for checking apartment availability with race condition prevention
 
 import { prisma } from "@/lib/prisma";
-import { Prisma } from "@/generated/prisma/client";
+import { Prisma, BookingStatus } from "@prisma/client";
 
 export interface AvailabilityCheck {
   apartmentId: string;
@@ -66,7 +66,11 @@ export class AvailabilityService {
         bookings: {
           where: {
             status: {
-              in: ["pending", "confirmed", "checked-in"],
+              in: [
+                BookingStatus.PENDING,
+                BookingStatus.CONFIRMED,
+                BookingStatus.CHECKED_IN,
+              ],
             },
             OR: [
               {
@@ -108,8 +112,12 @@ export class AvailabilityService {
     const conflicts: AvailabilityResult["conflicts"] = [];
 
     // Check for booking conflicts
-    if (apartment.bookings.length > 0) {
-      apartment.bookings.forEach((booking: any) => {
+    const apartmentWithRelations = apartment as any;
+    if (
+      apartmentWithRelations.bookings &&
+      apartmentWithRelations.bookings.length > 0
+    ) {
+      apartmentWithRelations.bookings.forEach((booking: any) => {
         conflicts.push({
           type: "booking",
           startDate: booking.checkInDate,
@@ -120,8 +128,11 @@ export class AvailabilityService {
     }
 
     // Check for blocked dates
-    if (apartment.availability.length > 0) {
-      apartment.availability.forEach((block: any) => {
+    if (
+      apartmentWithRelations.availability &&
+      apartmentWithRelations.availability.length > 0
+    ) {
+      apartmentWithRelations.availability.forEach((block: any) => {
         conflicts.push({
           type: "blocked",
           startDate: block.startDate,
@@ -144,7 +155,13 @@ export class AvailabilityService {
       const adjacentBookings = await prisma.booking.findMany({
         where: {
           apartmentId,
-          status: { in: ["pending", "confirmed", "checked-in"] },
+          status: {
+            in: [
+              BookingStatus.PENDING,
+              BookingStatus.CONFIRMED,
+              BookingStatus.CHECKED_IN,
+            ],
+          },
           OR: [
             {
               AND: [
@@ -268,7 +285,7 @@ export class AvailabilityService {
       orderBy: { checkInDate: "asc" },
     });
 
-    const mappedBookings = bookings.map((booking) => ({
+    const mappedBookings = bookings.map((booking:any) => ({
       id: booking.id,
       bookingReference: booking.confirmationNumber,
       checkIn: booking.checkInDate.toISOString(),

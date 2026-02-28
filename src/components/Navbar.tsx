@@ -75,8 +75,8 @@ export default function Navbar() {
         className={cn(
           "mx-auto flex w-full max-w-[1400px] items-center justify-between px-6 py-2.5 transition-all duration-500",
           isScrolled
-            ? "bg-background/80 border-border/40 border shadow-lg backdrop-blur-lg"
-            : "bg-transparent",
+            ? "bg-background border-border/40 border shadow-lg backdrop-blur-lg"
+            : "bg-background",
         )}
       >
         {/* Left: Language & Technical Marker */}
